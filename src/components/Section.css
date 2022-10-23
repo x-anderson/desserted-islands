@@ -1,0 +1,12 @@
+.section {
+    padding: 60px;
+}
+
+.background-one {
+    background-color: var(--background-color-one);
+    color: white;
+}
+
+.background-two {
+    background-color: var(--background-color-two);
+}

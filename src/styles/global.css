@@ -1,0 +1,43 @@
+
+body, head {
+    margin: 0;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+    font-family: var(--font-family);
+    text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+* {
+    --background-color-one: rgb(124, 167, 216);
+    --background-color-two: antiquewhite;
+    --font-family: 'Montserrat', sans-serif;
+}
+
+
