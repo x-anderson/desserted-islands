@@ -9,7 +9,7 @@ export default function CarouselSection() {
       <Carousel
         showThumbs={false}
         autoPlay={true}
-        interval={500000}
+        interval={3000}
         infiniteLoop
       >
         <div className="carousel-div">

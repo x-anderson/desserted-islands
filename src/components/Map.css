@@ -25,4 +25,8 @@
     .leaflet-container {
         height: 50vh
     }
+    .map-container {
+        width: 100vw;
+        margin-left: -60px;
+    }
 }

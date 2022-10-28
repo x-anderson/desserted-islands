@@ -12,15 +12,15 @@ export default function About() {
       <h3>Who am I?</h3>
       <p>
         My name is Xander, a (very) amateur baker from the UK. I've been baking
-        my way through traditional dessert recipes from the world's island
+        (and cooking, steaming, frying....) my way through traditional dessert recipes from the world's island
         countries.
       </p>
       <h1>🍰</h1>
       <h3>What is this page about?</h3>
       <p>
         I document most of my creations in my Instagram (link below!), but I
-        really wanted to visualise all my work on a map - so I present, the
-        "Desserted Islands Map" below
+        really wanted to visualise all my desserts on a map - so I present, the
+        "Desserted Islands Map" below.
       </p>
       <br></br>
     </Section>

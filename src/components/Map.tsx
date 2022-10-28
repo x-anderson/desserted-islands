@@ -18,6 +18,7 @@ export default function MapContainer() {
   return (
     <Section about="map" placement="odd">
       <h2>Desserted Islands Map</h2>
+      <h1>🌎</h1>
       <p>
         Discover desserts recipes! Click the markers on the map below to explore
         dessert recipes from the world's island countries.
