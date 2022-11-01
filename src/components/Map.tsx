@@ -50,35 +50,39 @@ function Map() {
   const countryMarkers = useMemo(() => {
     const countries = Object.values(islandCountries);
     return countries.map((country) => {
-      const post = countryPosts[country.alpha2];
+      const posts = countryPosts[country.alpha2];
+      const hasPost = posts?.length > 0
       return (
         <Marker
           key={country.alpha3}
-          opacity={post ? 1 : 0.5}
+          opacity={hasPost ? 1 : 0.5}
           position={{ lat: country.lat, lng: country.lng }}
-          icon={createIcon(post ? "cake" : "spinner")}
-          zIndexOffset={post ? 1000 : undefined}
+          icon={createIcon(hasPost ? "cake" : "spinner")}
+          zIndexOffset={hasPost ? 1000 : undefined}
         >
           <Popup closeButton={false}>
             <h3>{country.name}</h3>
-            {post && (
-              <a
-                className="btn"
-                href={post.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Click for deliciousness!
-                <br></br>
-                <FontAwesomeIcon
-                  className="map-link-icon"
-                  icon={faArrowUpRightFromSquare}
-                />
-              </a>
-            )}
-            {!post && <p>Coming soon....</p>}
+            {posts?.map((post, idx) => {
+              return <div key={`${idx}-${post.url}`} >
+                {post.subCountry && <h4>{post.subCountry}</h4>}
+                <a
+                  className="btn"
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Click for deliciousness!
+                  <br></br>
+                  <FontAwesomeIcon
+                    className="map-link-icon"
+                    icon={faArrowUpRightFromSquare}
+                  />
+                </a>
+              </div>
+            })}
+            {!hasPost && <p>Coming soon....</p>}
           </Popup>
-        </Marker>
+        </Marker >
       );
     });
   }, []);
