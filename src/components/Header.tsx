@@ -8,7 +8,6 @@ export default function Header() {
         src="/desserted-islands-logo.png"
         alt="company logo"
       />
-      <div className="app-header-line" />
     </header>
   );
 }
