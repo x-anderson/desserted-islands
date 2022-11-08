@@ -6,13 +6,26 @@ import {
   Popup,
   useMap,
 } from "react-leaflet";
-import { islandCountries } from "../data/islandCountries";
-import { countryPosts } from "../data/countryPosts";
 import L from "leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
+import { useFetch } from "../data/useFetch";
+
+type Country = {
+  name: string;
+  alpha2: string;
+  alpha3: string;
+  lat: number;
+  lng: number;
+};
+
+export type Post = {
+  countryAlpha2: string;
+  url: string;
+  subCountry?: string;
+};
 
 export default function MapContainer() {
   return (
@@ -44,14 +57,28 @@ function Map() {
     });
   };
 
+  const { data: posts, loading: postsLoading } = useFetch("/posts");
+  const { data: countries, loading: countriesLoading } = useFetch("/countries");
+
   const map = useMap();
   map.scrollWheelZoom.disable();
 
   const countryMarkers = useMemo(() => {
-    const countries = Object.values(islandCountries);
-    return countries.map((country) => {
-      const posts = countryPosts[country.alpha2];
-      const hasPost = posts?.length > 0
+    if (postsLoading || countriesLoading) {
+      return [];
+    }
+    const newcountryPosts: { [name: string]: Post[] } = {};
+    (posts as unknown as Post[]).forEach((post) => {
+      if (!newcountryPosts[post.countryAlpha2]) {
+        newcountryPosts[post.countryAlpha2] = [];
+      }
+      newcountryPosts[post.countryAlpha2].push(post);
+    });
+
+    return (countries as unknown as Country[]).map((country) => {
+      const posts = newcountryPosts[country.alpha2];
+      console.log(posts);
+      const hasPost = posts?.length > 0;
       return (
         <Marker
           key={country.alpha3}
@@ -62,30 +89,32 @@ function Map() {
         >
           <Popup closeButton={false}>
             <h3>{country.name}</h3>
-            {posts?.map((post, idx) => {
-              return <div key={`${idx}-${post.url}`} >
-                {post.subCountry && <h4>{post.subCountry}</h4>}
-                <a
-                  className="btn"
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Click for deliciousness!
-                  <br></br>
-                  <FontAwesomeIcon
-                    className="map-link-icon"
-                    icon={faArrowUpRightFromSquare}
-                  />
-                </a>
-              </div>
+            {(posts as unknown as Post[])?.map((post, idx) => {
+              return (
+                <div key={`${idx}-${post.url}`}>
+                  {post.subCountry && <h4>{post.subCountry}</h4>}
+                  <a
+                    className="btn"
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Click for deliciousness!
+                    <br></br>
+                    <FontAwesomeIcon
+                      className="map-link-icon"
+                      icon={faArrowUpRightFromSquare}
+                    />
+                  </a>
+                </div>
+              );
             })}
             {!hasPost && <p>Coming soon....</p>}
           </Popup>
-        </Marker >
+        </Marker>
       );
     });
-  }, []);
+  }, [postsLoading, countriesLoading, countries, posts]);
 
   return (
     <>

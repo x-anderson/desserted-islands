@@ -1,7 +1,7 @@
-type Post = {
+export type Post = {
   url: string;
   subCountry?: string;
-}
+};
 
 export const countryPosts: { [name: string]: Post[] } = {
   AW: [{ url: "https://www.instagram.com/p/CjF3Y8lj1gT/" }],
@@ -13,7 +13,9 @@ export const countryPosts: { [name: string]: Post[] } = {
   LC: [{ url: "https://www.instagram.com/p/ChuefEPj-p5/" }],
   GU: [{ url: "https://www.instagram.com/p/Chmb6ROj53x/" }],
   MU: [{ url: "https://www.instagram.com/p/ChZJhQsDEyv/" }],
-  GB: [{ url: "https://www.instagram.com/p/ChRncOZjIzH/", subCountry: 'Wales' }],
+  GB: [
+    { url: "https://www.instagram.com/p/ChRncOZjIzH/", subCountry: "Wales" },
+  ],
   SH: [{ url: "https://www.instagram.com/p/ChFIHvwjUl1/" }],
   MP: [{ url: "https://www.instagram.com/p/Cg9IQwcjHe1/" }],
   MH: [{ url: "https://www.instagram.com/p/Cgy-8tZjOxI/" }],
@@ -44,5 +46,5 @@ export const countryPosts: { [name: string]: Post[] } = {
   LK: [{ url: "https://www.instagram.com/p/CeO-6SAov-f/" }],
   TV: [{ url: "https://www.instagram.com/p/CeJkPbVoavp/" }],
   TO: [{ url: "https://www.instagram.com/p/CkX2Gb_D7RM/" }],
-  BQ: [{ url: "https://www.instagram.com/p/CkqLlM1DJAs/" }]
+  BQ: [{ url: "https://www.instagram.com/p/CkqLlM1DJAs/" }],
 };
