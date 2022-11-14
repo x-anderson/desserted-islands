@@ -44,5 +44,7 @@ export const countryPosts: { [name: string]: Post[] } = {
   LK: [{ url: "https://www.instagram.com/p/CeO-6SAov-f/" }],
   TV: [{ url: "https://www.instagram.com/p/CeJkPbVoavp/" }],
   TO: [{ url: "https://www.instagram.com/p/CkX2Gb_D7RM/" }],
-  BQ: [{ url: "https://www.instagram.com/p/CkqLlM1DJAs/" }]
+  BQ: [{ url: "https://www.instagram.com/p/CkqLlM1DJAs/" }],
+  GG: [{ url: "https://www.instagram.com/p/CkvXmCFjPJM/" }],
+  KN: [{ url: "https://www.instagram.com/p/Ck785TTjZwa/" }]
 };
