@@ -92,11 +92,11 @@ export const islandCountries: { [name: string]: Country } = {
     lng: -80.5,
   },
   CL: {
-    name: "Chile",
+    name: "Easter Island",
     alpha2: "CL",
     alpha3: "CHL",
-    lat: -30,
-    lng: -71,
+    lat: -27.1127,
+    lng: -109.3497,
   },
   CX: {
     name: "Christmas Island",
