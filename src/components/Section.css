@@ -1,10 +1,10 @@
 .section {
     padding: 60px;
+    color: #21232C;
 }
 
 .background-one {
     background-color: var(--background-color-one);
-    color: white;
 }
 
 .background-two {

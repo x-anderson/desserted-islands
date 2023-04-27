@@ -10,7 +10,7 @@ export default function About() {
       </h2>
       <div className="about-section">
         <div>
-          <h1>🏝</h1>
+          <h1><span>🏝</span></h1>
           <h3>Who am I?</h3>
           <p>
             My name is Xander, a (very) amateur baker from the UK. I've been baking
@@ -19,7 +19,7 @@ export default function About() {
           </p>
         </div>
         <div>
-          <h1>🍰</h1>
+          <h1><span>🍰</span></h1>
           <h3>What is this page about?</h3>
           <p>
             I document most of my creations in my Instagram (link below!), but I

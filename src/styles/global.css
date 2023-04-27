@@ -35,9 +35,12 @@ h6 {
 }
 
 * {
-    --background-color-one: rgb(124, 167, 216);
-    --background-color-two: antiquewhite;
+    --background-color-one: #BFDEF2;
+    --background-color-two: #FEF7E3;
     --font-family: 'Montserrat', sans-serif;
 }
 
+h1 > span {
+    font-size: 32px;
+}
 

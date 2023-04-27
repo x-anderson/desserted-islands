@@ -6,11 +6,12 @@ export default function Footer() {
   return (
     <footer className="app-footer">
       <div className="social-links">
+        <p>I post more delicious food here: </p>
         <a href="https://www.instagram.com/desserted_islands/">
-          <FontAwesomeIcon className="social-icon" icon={faInstagram} />
+          <FontAwesomeIcon className="social-icon" icon={faInstagram} title="Instagram link"/>
         </a>
       </div>
-      <p>© Copyright 2022 Xander Anderson</p>
+      <p className="footer-text">© 2020-present Xander Anderson. All Rights Reserved.</p>
     </footer>
   );
 }

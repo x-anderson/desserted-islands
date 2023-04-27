@@ -1,8 +1,8 @@
 .app-footer {
-    background-color: antiquewhite;
+    background-color: var(--background-color-two);
     padding: 20px;
     padding-bottom: 0;
-    height: 100px;
+    height: 120px;
 }
 
 .social-links {
@@ -10,8 +10,14 @@
     justify-content: center;
     align-items: center;
     list-style: none outside;
+    gap: 8px;
 }
 
 .social-icon {
     height: 30px
+}
+
+.footer-text {
+    margin-top: 24px;
+    font-size: 12px;
 }

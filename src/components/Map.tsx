@@ -17,8 +17,8 @@ import Section from "./Section";
 export default function MapContainer() {
   return (
     <Section about="map" placement="odd">
+      <h1><span>🌎</span></h1>
       <h2>Desserted Islands Map</h2>
-      <h1>🌎</h1>
       <p>
         Discover desserts recipes! Click the markers on the map below to explore
         dessert recipes from the world's island countries.
