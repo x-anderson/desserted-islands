@@ -1,6 +1,5 @@
 import "./Login.css";
 import netlifyIdentity from "netlify-identity-widget";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -10,18 +9,16 @@ type FormValues = {
 };
 
 export default function Login() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
   const handleLogin = () => {
-    if (loggedIn) {
+    if (netlifyIdentity.currentUser()) {
       netlifyIdentity.logout();
     } else {
       netlifyIdentity.open();
     }
   };
 
-  netlifyIdentity.on("login", () => setLoggedIn(true));
-  netlifyIdentity.on("logout", () => setLoggedIn(false));
+  netlifyIdentity.on("login", () => window.location.reload());
+  netlifyIdentity.on("logout", () => window.location.reload());
 
   const {
     register,
@@ -44,7 +41,7 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      {loggedIn && (
+      {netlifyIdentity.currentUser() && (
         <>
           <h4>Create new post</h4>
           <form className="form-group" onSubmit={handleSubmit(onSubmit)}>
@@ -73,7 +70,9 @@ export default function Login() {
         </>
       )}
       <div className="form-group">
-        <button onClick={handleLogin}>{loggedIn ? "Log Out" : "Login"}</button>
+        <button onClick={handleLogin}>
+          {netlifyIdentity.currentUser() ? "Log Out" : "Login"}
+        </button>
       </div>
     </div>
   );
