@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   MapContainer as ReactLeafletMapContainer,
   TileLayer,
@@ -7,7 +7,10 @@ import {
   useMap,
 } from "react-leaflet";
 import { islandCountries } from "../data/islandCountries";
-import { countryPosts } from "../data/countryPosts";
+import {
+  CountryPost,
+  countryPosts as defaultPosts,
+} from "../data/countryPosts";
 import L from "leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +20,9 @@ import Section from "./Section";
 export default function MapContainer() {
   return (
     <Section about="map" placement="odd">
-      <h1><span>🌎</span></h1>
+      <h1>
+        <span>🌎</span>
+      </h1>
       <h2>Desserted Islands Map</h2>
       <p>
         Discover desserts recipes! Click the markers on the map below to explore
@@ -47,11 +52,49 @@ function Map() {
   const map = useMap();
   map.scrollWheelZoom.disable();
 
+  const countries = Object.values(islandCountries);
+  const [countryPosts, setCountryPosts] = useState<{
+    [alpha2: string]: CountryPost[];
+  }>();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const data = await request<CountryPost[]>(
+        "/.netlify/functions/get_posts",
+        {
+          method: "GET",
+        }
+      );
+
+      if (data) {
+        const formattedCountryPosts: {
+          [alpha2: string]: CountryPost[];
+        } = {};
+        data.forEach((countryPost) => {
+          if (!formattedCountryPosts[countryPost.countryAlpha2]) {
+            formattedCountryPosts[countryPost.countryAlpha2] = [];
+          }
+          formattedCountryPosts[countryPost.countryAlpha2] = [
+            ...formattedCountryPosts[countryPost.countryAlpha2],
+            countryPost,
+          ];
+        });
+        setCountryPosts(formattedCountryPosts);
+      } else {
+        setCountryPosts(defaultPosts);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   const countryMarkers = useMemo(() => {
-    const countries = Object.values(islandCountries);
+    if (!countryPosts) {
+      return;
+    }
     return countries.map((country) => {
       const posts = countryPosts[country.alpha2];
-      const hasPost = posts?.length > 0
+      const hasPost = posts?.length > 0;
       return (
         <Marker
           key={country.alpha3}
@@ -63,29 +106,31 @@ function Map() {
           <Popup closeButton={false}>
             <h3>{country.name}</h3>
             {posts?.map((post, idx) => {
-              return <div key={`${idx}-${post.url}`} >
-                {post.subCountry && <h4>{post.subCountry}</h4>}
-                <a
-                  className="btn"
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Click for deliciousness!
-                  <br></br>
-                  <FontAwesomeIcon
-                    className="map-link-icon"
-                    icon={faArrowUpRightFromSquare}
-                  />
-                </a>
-              </div>
+              return (
+                <div key={`${idx}-${post.url}`}>
+                  {post.subCountry && <h4>{post.subCountry}</h4>}
+                  <a
+                    className="btn"
+                    href={post.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Click for deliciousness!
+                    <br></br>
+                    <FontAwesomeIcon
+                      className="map-link-icon"
+                      icon={faArrowUpRightFromSquare}
+                    />
+                  </a>
+                </div>
+              );
             })}
             {!hasPost && <p>Coming soon....</p>}
           </Popup>
-        </Marker >
+        </Marker>
       );
     });
-  }, []);
+  }, [countryPosts, countries]);
 
   return (
     <>
@@ -96,4 +141,14 @@ function Map() {
       {countryMarkers}
     </>
   );
+}
+
+// Helper to handle fetch type assertions
+async function request<TResponse>(
+  url: string,
+  config: RequestInit = {}
+): Promise<TResponse> {
+  return fetch(url, config)
+    .then((response) => response.json())
+    .then((data) => data as TResponse);
 }
