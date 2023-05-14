@@ -5,23 +5,20 @@ const handler: Handler = async (
   event: HandlerEvent,
   context: HandlerContext
 ) => {
-  const client = await MongoClient.connect(
-    process.env.MONGODB_URI_CLIENT || ""
-  );
+  if (!event.body) {
+    return { statusCode: 422 };
+  }
+
+  const client = await MongoClient.connect(process.env.MONGODB_URI_ADMIN || "");
 
   const db = client.db(process.env.MONGO_DB_NAME);
 
-  const res = await db
+  await db
     .collection(process.env.MONGO_DB_COLLECTION || "")
-    .find({})
-    .toArray();
+    .insertOne(JSON.parse(event.body));
 
   return {
     statusCode: 200,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(res),
   };
 };
 
