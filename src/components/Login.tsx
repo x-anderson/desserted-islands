@@ -1,6 +1,7 @@
 import "./Login.css";
 import netlifyIdentity from "netlify-identity-widget";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 type FormValues = {
   url: string;
@@ -28,15 +29,22 @@ export default function Login() {
 
   const onSubmit = (data: FormValues, e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
-    createPost(data);
+    handleCreatePost(data);
+  };
+
+  const handleCreatePost = async (data: FormValues) => {
+    toast.promise(createPost(data), {
+      pending: "Creating post...",
+      success: "Post created!",
+      error: "Error in creating post.",
+    });
   };
 
   const createPost = async (data: FormValues) => {
-    const postRequest = await fetch("/.netlify/functions/create_post", {
+    return await fetch("/.netlify/functions/create_post", {
       method: "POST",
       body: JSON.stringify(data),
     });
-    console.log("POST request status code", postRequest.status);
   };
 
   return (

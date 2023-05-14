@@ -2,6 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/global.css";
 import App from "./App";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const netlifyIdentity = require("netlify-identity-widget");
 
 netlifyIdentity.init();
@@ -18,5 +21,6 @@ root.render(
       crossOrigin=""
     />
     <App />
+    <ToastContainer position="bottom-center" draggable={false} />
   </React.StrictMode>
 );
