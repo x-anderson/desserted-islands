@@ -1,6 +1,6 @@
 import "./Login.css";
 import netlifyIdentity from "netlify-identity-widget";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormValues = {
@@ -12,12 +12,6 @@ type FormValues = {
 export default function Login() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    if (netlifyIdentity.currentUser()) {
-      setLoggedIn(true);
-    }
-  }, []);
-
   const handleLogin = () => {
     if (loggedIn) {
       netlifyIdentity.logout();
@@ -25,6 +19,9 @@ export default function Login() {
       netlifyIdentity.open();
     }
   };
+
+  netlifyIdentity.on("login", () => setLoggedIn(true));
+  netlifyIdentity.on("logout", () => setLoggedIn(false));
 
   const {
     register,
