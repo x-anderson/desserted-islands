@@ -2,6 +2,7 @@ import "./Login.css";
 import netlifyIdentity from "netlify-identity-widget";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { islandCountries } from "../data/islandCountries";
 
 type FormValues = {
   url: string;
@@ -47,6 +48,8 @@ export default function Login() {
     });
   };
 
+  const countryAlpha2 = Object.keys(islandCountries);
+
   return (
     <div className="login-page">
       {netlifyIdentity.currentUser() && (
@@ -60,13 +63,16 @@ export default function Login() {
               {...register("url", { required: true })}
             />
             {errors.url && <span>This field is required</span>}
-            <input
-              placeholder="COUNTRYALPHA2"
-              type="text"
-              autoComplete="off"
-              {...register("countryAlpha2", { required: true })}
-            />
+
+            <select {...register("countryAlpha2", { required: true })}>
+              {countryAlpha2.map((value) => (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              ))}
+            </select>
             {errors.countryAlpha2 && <span>This field is required</span>}
+
             <input
               placeholder="SUBCOUNTRY"
               type="text"
