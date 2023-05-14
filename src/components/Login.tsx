@@ -33,7 +33,6 @@ export default function Login() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues, e?: React.BaseSyntheticEvent) => {
-    console.log(data);
     e?.preventDefault();
     createPost(data);
   };
@@ -48,38 +47,37 @@ export default function Login() {
 
   return (
     <div className="login-page">
-      <button className="login-button" onClick={handleLogin}>
-        {loggedIn ? "Log Out" : "Login"}
-      </button>
       {loggedIn && (
-        <div>
-          <form id="createPostForm" onSubmit={handleSubmit(onSubmit)}>
-            <label>
-              URL:
-              <input type="text" {...register("url", { required: true })} />
-              {errors.url && <span>This field is required</span>}
-            </label>
-            <label>
-              CountryAlpha2:
-              <input
-                type="text"
-                {...register("countryAlpha2", { required: true })}
-              />
-              {errors.countryAlpha2 && <span>This field is required</span>}
-            </label>
-            <label>
-              Subcountry:
-              <input type="text" {...register("subCountry")} />
-            </label>
+        <>
+          <h4>Create new post</h4>
+          <form className="form-group" onSubmit={handleSubmit(onSubmit)}>
             <input
-              type="submit"
-              value="Submit"
-              form="createPostForm"
-              onSubmit={handleSubmit(onSubmit)}
+              placeholder="URL"
+              type="text"
+              autoComplete="off"
+              {...register("url", { required: true })}
             />
+            {errors.url && <span>This field is required</span>}
+            <input
+              placeholder="COUNTRYALPHA2"
+              type="text"
+              autoComplete="off"
+              {...register("countryAlpha2", { required: true })}
+            />
+            {errors.countryAlpha2 && <span>This field is required</span>}
+            <input
+              placeholder="SUBCOUNTRY"
+              type="text"
+              autoComplete="off"
+              {...register("subCountry")}
+            />
+            <input type="submit" value="Submit" />
           </form>
-        </div>
+        </>
       )}
+      <div className="form-group">
+        <button onClick={handleLogin}>{loggedIn ? "Log Out" : "Login"}</button>
+      </div>
     </div>
   );
 }

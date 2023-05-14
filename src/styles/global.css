@@ -1,6 +1,6 @@
-
-body, head {
-    margin: 0;
+body,
+head {
+  margin: 0;
 }
 
 img,
@@ -8,20 +8,21 @@ picture,
 video,
 canvas,
 svg {
-    display: block;
-    max-width: 100%;
+  display: block;
+  max-width: 100%;
 }
 
 p,
+span,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    overflow-wrap: break-word;
-    font-family: var(--font-family);
-    text-align: center;
+  overflow-wrap: break-word;
+  font-family: var(--font-family);
+  text-align: center;
 }
 
 h1,
@@ -30,17 +31,46 @@ h3,
 h4,
 h5,
 h6 {
-    text-transform: uppercase;
-    font-weight: 700;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+input[type="submit"],
+button {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid rgb(14, 30, 37);
+  background-color: #2d3b41;
+  color: white;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 24px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+  background-color: rgb(14, 30, 37);
+  cursor: pointer;
+}
+
+input {
+  border: 2px solid #e9ebeb;
+  height: 40px;
+  width: 100%;
+  padding: 4px;
+  margin: 0;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 * {
-    --background-color-one: #BFDEF2;
-    --background-color-two: #FEF7E3;
-    --font-family: 'Montserrat', sans-serif;
+  --background-color-one: #bfdef2;
+  --background-color-two: #fef7e3;
+  --font-family: "Montserrat", sans-serif;
 }
 
 h1 > span {
-    font-size: 32px;
+  font-size: 32px;
 }
-
