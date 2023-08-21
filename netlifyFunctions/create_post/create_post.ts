@@ -9,12 +9,14 @@ const handler: Handler = async (
     return { statusCode: 422 };
   }
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI_ADMIN || "");
+  const mongoClient = await MongoClient.connect(
+    process.env.MONGODB_URI_ADMIN || ""
+  );
 
-  const db = client.db(process.env.MONGO_DB_NAME);
+  const db = mongoClient.db(process.env.MONGO_DB_NAME);
 
   await db
-    .collection(process.env.MONGO_DB_COLLECTION || "")
+    .collection(process.env.MONGO_DB_COLLECTION_POSTS || "")
     .insertOne(JSON.parse(event.body));
 
   return {
