@@ -2,7 +2,9 @@ import "./Login.css";
 import netlifyIdentity from "netlify-identity-widget";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { islandCountries } from "../data/islandCountries";
+import { useEffect, useState } from "react";
+import { Country } from "../data/types";
+import { request } from "../data/utils";
 
 type FormValues = {
   url: string;
@@ -21,6 +23,21 @@ export default function Login() {
 
   netlifyIdentity.on("login", () => window.location.reload());
   netlifyIdentity.on("logout", () => window.location.reload());
+
+  const [countries, setCountries] = useState<Country[] | undefined>();
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const islandCountries = await request<Country[]>(
+        "/.netlify/functions/get_countries",
+        {
+          method: "GET",
+        }
+      );
+      setCountries(islandCountries);
+    };
+    fetchCountries();
+  }, []);
 
   const {
     register,
@@ -48,7 +65,8 @@ export default function Login() {
     });
   };
 
-  const countryAlpha2 = Object.keys(islandCountries);
+  const countryAlpha2 = countries?.map((country) => country.alpha2);
+  countryAlpha2?.sort();
 
   return (
     <div className="login-page">
@@ -65,7 +83,7 @@ export default function Login() {
             {errors.url && <span>This field is required</span>}
 
             <select {...register("countryAlpha2", { required: true })}>
-              {countryAlpha2.map((value) => (
+              {countryAlpha2?.map((value) => (
                 <option key={value} value={value}>
                   {value}
                 </option>

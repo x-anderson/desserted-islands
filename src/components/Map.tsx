@@ -6,11 +6,7 @@ import {
   Popup,
   useMap,
 } from "react-leaflet";
-import { islandCountries } from "../data/islandCountries";
-import {
-  CountryPost,
-  countryPosts as defaultPosts,
-} from "../data/countryPosts";
+import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -52,49 +48,53 @@ function Map() {
   const map = useMap();
   map.scrollWheelZoom.disable();
 
-  const countries = Object.values(islandCountries);
+  const [countries, setCountries] = useState<Country[] | undefined>();
   const [countryPosts, setCountryPosts] = useState<{
-    [alpha2: string]: CountryPost[];
+    [alpha2: string]: CountryPost[] | undefined;
   }>();
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await request<CountryPost[]>(
+      const islandPosts = await request<CountryPost[]>(
         "/.netlify/functions/get_posts",
         {
           method: "GET",
         }
       );
 
-      if (data) {
-        const formattedCountryPosts: {
-          [alpha2: string]: CountryPost[];
-        } = {};
-        data.forEach((countryPost) => {
-          if (!formattedCountryPosts[countryPost.countryAlpha2]) {
-            formattedCountryPosts[countryPost.countryAlpha2] = [];
-          }
-          formattedCountryPosts[countryPost.countryAlpha2] = [
-            ...formattedCountryPosts[countryPost.countryAlpha2],
-            countryPost,
-          ];
-        });
-        setCountryPosts(formattedCountryPosts);
-      } else {
-        setCountryPosts(defaultPosts);
-      }
+      const formattedCountryPosts: {
+        [alpha2: string]: CountryPost[];
+      } = {};
+      islandPosts?.forEach((countryPost) => {
+        if (!formattedCountryPosts[countryPost.countryAlpha2]) {
+          formattedCountryPosts[countryPost.countryAlpha2] = [];
+        }
+        formattedCountryPosts[countryPost.countryAlpha2] = [
+          ...formattedCountryPosts[countryPost.countryAlpha2],
+          countryPost,
+        ];
+      });
+      setCountryPosts(formattedCountryPosts);
+
+      const islandCountries = await request<Country[]>(
+        "/.netlify/functions/get_countries",
+        {
+          method: "GET",
+        }
+      );
+      setCountries(islandCountries);
     };
 
     fetchPosts();
   }, []);
 
   const countryMarkers = useMemo(() => {
-    if (!countryPosts) {
+    if (!countryPosts || !countries) {
       return;
     }
-    return countries.map((country) => {
+    return countries?.map((country) => {
       const posts = countryPosts[country.alpha2];
-      const hasPost = posts?.length > 0;
+      const hasPost = posts?.length && posts.length > 0;
       return (
         <Marker
           key={country.alpha3}

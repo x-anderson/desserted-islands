@@ -11,7 +11,7 @@ const handler: Handler = async (
     const db = mongoClient.db(process.env.MONGO_DB_NAME);
 
     const res = await db
-      .collection(process.env.MONGO_DB_COLLECTION_POSTS || "")
+      .collection(process.env.MONGO_DB_COLLECTION_COUNTRIES || "")
       .find({})
       .toArray();
 
