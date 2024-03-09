@@ -92,7 +92,25 @@ function Map() {
     if (!countryPosts || !countries) {
       return;
     }
-    return countries?.map((country) => {
+    // When the user pans to another copy of the map, they do not see the markers on that copy
+    // as the markers are on only 1 layer. One option is to use the worldCopyJump option in leaflet
+    // but it doesn't work well when panning zoomed out. Instead, we can create some copies of the
+    // markers along the longitude to ensure they appear on more copies to give the impression to
+    // the user that they can scroll back and forth.
+    const countriesUpdatedLng: Country[] = [...countries];
+    countries.forEach((country) => {
+      for (let i = 360; i <= 1080; i += 360) {
+        countriesUpdatedLng.push({
+          ...country,
+          lng: country.lng + i,
+        });
+        countriesUpdatedLng.push({
+          ...country,
+          lng: country.lng - i,
+        });
+      }
+    });
+    return countriesUpdatedLng.map((country) => {
       const posts = countryPosts[country.alpha2];
       const hasPost = posts?.length && posts.length > 0;
       return (
