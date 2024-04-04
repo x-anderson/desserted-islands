@@ -13,6 +13,8 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
 
+require("leaflet-spin");
+
 export default function MapContainer() {
   return (
     <Section about="map" placement="odd">
@@ -55,6 +57,8 @@ function Map() {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      // @ts-ignore
+      map.spin(true, { color: `var(--marker-icon-color)` });
       const islandPosts = await request<CountryPost[]>(
         "/.netlify/functions/get_posts",
         {
@@ -85,8 +89,11 @@ function Map() {
       setCountries(islandCountries);
     };
 
-    fetchPosts();
-  }, []);
+    fetchPosts().then(() => {
+      // @ts-ignore
+      map.spin(false);
+    });
+  }, [map]);
 
   const countryMarkers = useMemo(() => {
     if (!countryPosts || !countries) {
