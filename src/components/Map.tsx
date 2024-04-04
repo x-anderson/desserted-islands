@@ -110,12 +110,12 @@ function Map() {
         });
       }
     });
-    return countriesUpdatedLng.map((country) => {
+    return countriesUpdatedLng.map((country, idx) => {
       const posts = countryPosts[country.alpha2];
       const hasPost = posts?.length && posts.length > 0;
       return (
         <Marker
-          key={country.alpha3}
+          key={`${country.alpha2}-${idx}`}
           opacity={hasPost ? 1 : 0.5}
           position={{ lat: country.lat, lng: country.lng }}
           icon={createIcon(hasPost ? "cake" : "spinner")}
