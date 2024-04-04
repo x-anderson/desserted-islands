@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   MapContainer as ReactLeafletMapContainer,
   TileLayer,
@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
+import { useSearchParams } from "react-router-dom";
 
 require("leaflet-spin");
 
@@ -34,6 +35,8 @@ export default function MapContainer() {
     </Section>
   );
 }
+
+const SELECTED_COUNTRY_URL_PARAM = "selectedCountry";
 
 function Map() {
   const createIcon = (icon: "cake" | "spinner") => {
@@ -95,6 +98,49 @@ function Map() {
     });
   }, [map]);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleMarkerClick = useCallback(
+    (alpha2: string) => {
+      setSearchParams((params) => {
+        params.set(SELECTED_COUNTRY_URL_PARAM, alpha2);
+        return params;
+      });
+    },
+    [setSearchParams]
+  );
+
+  const handleMarkerClose = useCallback(() => {
+    setSearchParams((params) => {
+      params.delete(SELECTED_COUNTRY_URL_PARAM);
+      return params;
+    });
+  }, [setSearchParams]);
+
+  const popupRefs = useRef<{ [alpha2: string]: L.Popup | null }>({});
+
+  useEffect(() => {
+    const selectedCountryAlpha2 = searchParams.get(SELECTED_COUNTRY_URL_PARAM);
+    if (SELECTED_COUNTRY_URL_PARAM) {
+      const selectedCountry = countries?.find(
+        (country) => country.alpha2 === selectedCountryAlpha2
+      );
+      if (selectedCountry) {
+        map.flyTo([selectedCountry.lat, selectedCountry.lng]);
+        const selectedCountryRef = popupRefs.current?.[selectedCountry.alpha2];
+        if (selectedCountryRef) {
+          selectedCountryRef.setLatLng([
+            selectedCountry.lat,
+            selectedCountry.lng,
+          ]);
+          map.openPopup(selectedCountryRef);
+        }
+      }
+    }
+    // We only want this to run if countries change (which should happen only on load)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countries]);
+
   const countryMarkers = useMemo(() => {
     if (!countryPosts || !countries) {
       return;
@@ -120,6 +166,7 @@ function Map() {
     return countriesUpdatedLng.map((country, idx) => {
       const posts = countryPosts[country.alpha2];
       const hasPost = posts?.length && posts.length > 0;
+      const firstMapCountry = country.lng >= 0 && country.lng <= 360;
       return (
         <Marker
           key={`${country.alpha2}-${idx}`}
@@ -127,8 +174,19 @@ function Map() {
           position={{ lat: country.lat, lng: country.lng }}
           icon={createIcon(hasPost ? "cake" : "spinner")}
           zIndexOffset={hasPost ? 1000 : undefined}
+          eventHandlers={{
+            click: () => handleMarkerClick(country.alpha2),
+          }}
         >
-          <Popup closeButton={false}>
+          <Popup
+            ref={(r) => {
+              if (firstMapCountry && popupRefs.current) {
+                popupRefs.current[country.alpha2] = r;
+              }
+            }}
+            closeButton={false}
+            eventHandlers={{ remove: () => handleMarkerClose() }}
+          >
             <h3>{country.name}</h3>
             {posts?.map((post, idx) => {
               return (
@@ -155,7 +213,7 @@ function Map() {
         </Marker>
       );
     });
-  }, [countryPosts, countries]);
+  }, [countryPosts, countries, handleMarkerClick, handleMarkerClose]);
 
   return (
     <>
