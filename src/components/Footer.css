@@ -1,11 +1,11 @@
 .app-footer {
   background-color: var(--background-color-two);
   padding: 20px;
-  padding-bottom: 0;
+  padding-bottom: 10px;
   height: 70px;
 }
 
-.social-links {
+.links {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,8 +13,8 @@
   gap: 8px;
 }
 
-.social-icon {
-  height: 30px;
+.icon {
+  height: 28px;
 }
 
 .footer-text {
