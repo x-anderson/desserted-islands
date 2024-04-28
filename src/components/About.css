@@ -1,13 +1,12 @@
 .about-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 60px;
 }
 
-
-@media only screen and (max-width: 600px) {
-    .about-section {
-        grid-template-columns: 1fr;
-        grid-gap: 0px;
-    }
+@media only screen and (max-width: 800px) {
+  .about-section {
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+  }
 }

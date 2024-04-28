@@ -75,10 +75,11 @@ select {
 }
 
 * {
-  --background-color-one: #bfdef2;
-  --background-color-two: #fef7e3;
+  --background-color-one: #a2d2f6;
+  --background-color-two: #fdfbc4;
   --marker-icon-color: #00c0fa;
   --font-family: "Montserrat", sans-serif;
+  --font-family-logo: "Poiret One", "sans-serif";
 }
 
 h1 > span {

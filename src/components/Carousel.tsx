@@ -2,11 +2,23 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import Section from "./Section";
 import "./Carousel.css";
+import { useMediaQuery } from "react-responsive";
 
 export default function CarouselSection() {
+  const isLargeWidth = useMediaQuery({
+    query: "(min-width: 800px)",
+  });
+
   return (
-    <Section about="carousel" placement="odd" className="carousel-section">
-      <Carousel showThumbs={false} autoPlay={true} interval={3000} infiniteLoop>
+    <Section about="carousel" placement="odd" className={`carousel-section`}>
+      <Carousel
+        showThumbs={false}
+        autoPlay={true}
+        interval={3000}
+        infiniteLoop
+        centerMode={isLargeWidth}
+        centerSlidePercentage={50}
+      >
         <div className="carousel-div">
           <img
             src="/ar-pineapple.jpg"

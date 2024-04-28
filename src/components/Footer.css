@@ -1,23 +1,23 @@
 .app-footer {
-    background-color: var(--background-color-two);
-    padding: 20px;
-    padding-bottom: 0;
-    height: 120px;
+  background-color: var(--background-color-two);
+  padding: 20px;
+  padding-bottom: 0;
+  height: 70px;
 }
 
 .social-links {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none outside;
-    gap: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none outside;
+  gap: 8px;
 }
 
 .social-icon {
-    height: 30px
+  height: 30px;
 }
 
 .footer-text {
-    margin-top: 24px;
-    font-size: 12px;
+  margin-top: 24px;
+  font-size: 12px;
 }
