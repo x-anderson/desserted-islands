@@ -21,40 +21,73 @@ export default function CarouselSection() {
       >
         <div className="carousel-div">
           <img
-            src="/ar-pineapple.jpg"
+            src="/ar-pineapple-1600.jpeg"
             alt="Bolo di Anasa (pineapple upside-down-cake) from Aruba"
+            srcSet="
+            /ar-pineapple-300.jpeg 300w,
+            /ar-pineapple-800.jpeg 800w,
+            /ar-pineapple-1600.jpeg 1600w,
+           "
           />
           <p className="legend">🇦🇼 Bolo di Anasa from Aruba</p>
         </div>
         <div>
           <img
-            src="/in-kue-mangkok.jpg"
+            src="/in-kue-mangkok-1600.jpeg"
             alt="Kue Mangkok (colorful steamed cakes) from Indonesia"
+            srcSet="
+            /in-kue-mangkok-300.jpeg 300w,
+            /in-kue-mangkok-800.jpeg 800w,
+            /in-kue-mangkok-1600.jpeg 1600w,
+           "
           />
           <p className="legend">🇮🇩 Kue Mangkok from Indonesia</p>
         </div>
         <div>
-          <img src="/tv-coconut.jpg" alt="Coconut Pudding from Tuvalu" />
+          <img
+            src="/tv-coconut-1600.jpeg"
+            alt="Coconut Pudding from Tuvalu"
+            srcSet="
+            /tv-coconut-300.jpeg 300w,
+            /tv-coconut-800.jpeg 800w,
+            /tv-coconut-1600.jpeg 1600w,
+           "
+          />
           <p className="legend">🇹🇻 Coconut Pudding from Tuvalu</p>
         </div>
         <div className="carousel-div">
           <img
-            src="/sv-blotkake.jpg"
+            src="/sv-blotkake-1600.jpeg"
             alt="Blotkake (strawberry and cream sponge cake) from Svalbard"
+            srcSet="
+            /sv-blotkake-300.jpeg 300w,
+            /sv-blotkake-800.jpeg 800w,
+            /sv-blotkake-1600.jpeg 1600w,
+           "
           />
           <p className="legend">🇦🇸 Bløtkake from Svalbard</p>
         </div>
         <div>
           <img
-            src="/mg-kobo-akondo.jpg"
+            src="/mg-kobo-akondo-1600.jpeg"
             alt="Koba Akondro (banana and peanut pudding) from Madagascar"
+            srcSet="
+            /mg-kobo-akondo-300.jpeg 300w,
+            /mg-kobo-akondo-800.jpeg 800w,
+            /mg-kobo-akondo-1600.jpeg 1600w,
+           "
           />
           <p className="legend">🇲🇬Koba Akondro from Madagascar</p>
         </div>
         <div>
           <img
-            src="/mt-kwarezimal.jpg"
+            src="/mt-kwarezimal-1600.jpeg"
             alt="Kwarezimal (orange blossom biscuits) from Malta"
+            srcSet="
+            /mt-kwarezimal-300.jpeg 300w,
+            /mt-kwarezimal-800.jpeg 800w,
+            /mt-kwarezimal-1600.jpeg 1600w,
+           "
           />
           <p className="legend">🇲🇹 Kwareżimal from Malta</p>
         </div>
