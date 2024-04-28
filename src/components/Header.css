@@ -9,6 +9,9 @@
 
 .app-header > svg {
   max-width: 75px;
+  max-height: 75px;
+  height: 75px;
+  width: 75px;
 }
 
 .header-logo-text {
@@ -26,6 +29,9 @@
 
   .app-header > svg {
     max-width: 50px;
+    max-height: 50px;
+    height: 50px;
+    width: 50px;
   }
 
   .header-logo-text {

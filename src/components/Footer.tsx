@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="app-footer">
       <div className="social-links">
-        <p>I post more delicious food here: </p>
+        <p>👋 I post all my delicious desserts on Instagram here:</p>
         <a href="https://www.instagram.com/desserted_islands/">
           <FontAwesomeIcon
             className="social-icon"

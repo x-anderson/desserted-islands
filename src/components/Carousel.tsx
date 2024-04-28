@@ -17,7 +17,7 @@ export default function CarouselSection() {
         interval={3000}
         infiniteLoop
         centerMode={isLargeWidth}
-        centerSlidePercentage={50}
+        centerSlidePercentage={isLargeWidth ? 50 : undefined}
       >
         <div className="carousel-div">
           <img
