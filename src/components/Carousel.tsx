@@ -28,6 +28,7 @@ export default function CarouselSection() {
             /ar-pineapple-800.jpeg 800w,
             /ar-pineapple-1600.jpeg 1600w,
            "
+            fetchpriority="high"
           />
           <p className="legend">🇦🇼 Bolo di Anasa from Aruba</p>
         </div>
@@ -40,6 +41,7 @@ export default function CarouselSection() {
             /in-kue-mangkok-800.jpeg 800w,
             /in-kue-mangkok-1600.jpeg 1600w,
            "
+            fetchpriority="low"
           />
           <p className="legend">🇮🇩 Kue Mangkok from Indonesia</p>
         </div>
@@ -52,6 +54,7 @@ export default function CarouselSection() {
             /tv-coconut-800.jpeg 800w,
             /tv-coconut-1600.jpeg 1600w,
            "
+            fetchpriority="low"
           />
           <p className="legend">🇹🇻 Coconut Pudding from Tuvalu</p>
         </div>
@@ -64,6 +67,7 @@ export default function CarouselSection() {
             /sv-blotkake-800.jpeg 800w,
             /sv-blotkake-1600.jpeg 1600w,
            "
+            fetchpriority="low"
           />
           <p className="legend">🇦🇸 Bløtkake from Svalbard</p>
         </div>
@@ -76,6 +80,7 @@ export default function CarouselSection() {
             /mg-kobo-akondo-800.jpeg 800w,
             /mg-kobo-akondo-1600.jpeg 1600w,
            "
+            fetchpriority="low"
           />
           <p className="legend">🇲🇬Koba Akondro from Madagascar</p>
         </div>
@@ -88,6 +93,7 @@ export default function CarouselSection() {
             /mt-kwarezimal-800.jpeg 800w,
             /mt-kwarezimal-1600.jpeg 1600w,
            "
+            fetchpriority="low"
           />
           <p className="legend">🇲🇹 Kwareżimal from Malta</p>
         </div>
