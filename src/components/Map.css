@@ -21,6 +21,33 @@
   text-align: center;
 }
 
+.map-header {
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+}
+
+.map-header-title {
+  grid-column: 2;
+  scroll-margin-top: 28px;
+}
+
+.map-header-link {
+  grid-column: 1;
+  align-self: center;
+  justify-self: end;
+  margin-right: 12px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.map-header-link:active {
+  color: currentColor;
+}
+
+.map-header:hover .map-header-link {
+  opacity: 100;
+}
+
 @media only screen and (max-width: 800px) {
   .leaflet-container {
     height: 70vh;

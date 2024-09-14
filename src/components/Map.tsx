@@ -9,20 +9,46 @@ import {
 import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faLink,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 require("leaflet-spin");
 
 export default function MapContainer() {
+  const location = useLocation();
+  const lastHash = useRef("");
+
+  useEffect(() => {
+    if (location.hash) {
+      lastHash.current = location.hash.slice(1);
+    }
+
+    if (lastHash.current && document.getElementById(lastHash.current)) {
+      document
+        .getElementById(lastHash.current)
+        ?.scrollIntoView({ block: "start" });
+      lastHash.current = "";
+    }
+  }, [location]);
+
   return (
     <Section about="map" placement="odd">
       <h1>
         <span>🌎</span>
       </h1>
-      <h2>Desserted Islands Map</h2>
+      <div className="map-header">
+        <a className="map-header-link" href="#map">
+          <FontAwesomeIcon className="link-icon" icon={faLink} />
+        </a>
+        <h2 className="map-header-title" id="map">
+          Desserted Islands Map
+        </h2>
+      </div>
       <p>
         Discover desserts recipes! Click the markers on the map below to explore
         dessert recipes from the world's island countries.
