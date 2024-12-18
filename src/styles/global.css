@@ -1,6 +1,21 @@
-body,
-head {
+/**
+ * Credit to https://www.joshwcomeau.com/css/custom-css-reset/
+**/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
   margin: 0;
+  --background-color-light: #FFFFFF;
+  --background-color-dark: #2B1100;
+  --background-color-gradient-start: #88DE88;
+  --marker-icon-color: #00c0fa;
+  --font-color-dark: #000000; 
+  --font-color-light: #FFFFFF;
+  --font-family: "Urbanist", sans-serif;
+  --font-family-logo: "Poiret One", "sans-serif";
 }
 
 img,
@@ -21,8 +36,11 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
   font-family: var(--font-family);
   text-align: center;
+  text-wrap: balance;
 }
 
 h1,
@@ -31,8 +49,27 @@ h3,
 h4,
 h5,
 h6 {
-  text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  line-height: 1.5;
 }
 
 input[type="submit"],
@@ -72,14 +109,6 @@ select {
   margin: 0;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-* {
-  --background-color-one: #a2d2f6;
-  --background-color-two: #fdfbc4;
-  --marker-icon-color: #00c0fa;
-  --font-family: "Montserrat", sans-serif;
-  --font-family-logo: "Poiret One", "sans-serif";
 }
 
 h1 > span {

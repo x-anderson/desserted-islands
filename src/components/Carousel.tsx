@@ -10,7 +10,7 @@ export default function CarouselSection() {
   });
 
   return (
-    <Section about="carousel" placement="odd" className={`carousel-section`}>
+    <Section about="carousel" background="dark" className={`carousel-section`}>
       <Carousel
         showThumbs={false}
         autoPlay={true}
