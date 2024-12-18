@@ -1,9 +1,10 @@
 import "./Section.css";
+import "./Carousel.css";
 import cx from "classnames";
 
 type SectionProps = {
   about: string;
-  background: 'light' | 'dark' | 'gradient';
+  background: "light" | "dark" | "gradient";
   className?: string;
   children: JSX.Element | JSX.Element[];
 };
@@ -14,11 +15,7 @@ export default function Section(props: SectionProps) {
   return (
     <section
       about={about}
-      className={cx(
-        "section",
-        className,
-        `background-${background}`
-      )}
+      className={cx("section", `background-${background}`, className)}
     >
       {props.children}
     </section>
