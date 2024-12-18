@@ -1,12 +1,34 @@
 .about-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 60px;
+  grid-gap: 40px;
+  margin-top: 60px;
+}
+
+.about-box {
+  border-radius: 20px;
+  border: solid 1px #88de88;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.about-box > p {
+  color: #4b5563;
+}
+
+.about-word-highlight {
+  color: #e42730;
+}
+
+.about-box-dark {
+  background-color: #f2fbf2;
 }
 
 @media only screen and (max-width: 800px) {
   .about-section {
     grid-template-columns: 1fr;
-    grid-gap: 0px;
   }
 }

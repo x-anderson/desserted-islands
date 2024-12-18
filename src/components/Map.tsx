@@ -37,7 +37,7 @@ export default function MapContainer() {
   }, [location]);
 
   return (
-    <Section about="map" background='dark'>
+    <Section about="map" background="dark">
       <div className="map-header">
         <a className="map-header-link" href="#map">
           <FontAwesomeIcon className="link-icon" icon={faLink} />

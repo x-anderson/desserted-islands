@@ -4,7 +4,8 @@
 }
 
 .map-container {
-  padding: 20px 0px;
+  padding: 0px;
+  padding-top: 40px;
 }
 
 .map-link-icon {
