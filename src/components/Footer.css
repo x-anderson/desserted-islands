@@ -51,4 +51,7 @@
   .footer-links {
     flex-direction: column;
   }
+  .footer-logo {
+    width: 180px;
+  }
 }
