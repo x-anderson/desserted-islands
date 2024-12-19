@@ -1,40 +1,26 @@
 .app-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 8px 160px;
   height: 100px;
-  background-color: var(--background-color-two);
+  background-color: var(--background-color-gradient-start);
   gap: 16px;
 }
 
-.app-header > svg {
-  max-width: 75px;
-  max-height: 75px;
-  height: 75px;
-  width: 75px;
+.app-header-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }
 
-.header-logo-text {
-  font-family: var(--font-family-logo);
-  font-size: 52px;
-  text-transform: none;
-  margin: 0;
-  filter: drop-shadow(0px 2px 1px rgba(0, 0, 0, 0.25));
+.app-header-logo {
+  height: 100%;
 }
 
 @media only screen and (max-width: 800px) {
   .app-header {
-    height: 80px;
-  }
-
-  .app-header > svg {
-    max-width: 50px;
-    max-height: 50px;
-    height: 50px;
-    width: 50px;
-  }
-
-  .header-logo-text {
-    font-size: 36px;
+    height: 70px;
+    padding: 8px 20px;
   }
 }

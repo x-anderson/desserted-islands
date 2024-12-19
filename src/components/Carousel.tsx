@@ -1,38 +1,51 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 import Section from "./Section";
-import "./Carousel.css";
-import { useMediaQuery } from "react-responsive";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 export default function CarouselSection() {
-  const isLargeWidth = useMediaQuery({
-    query: "(min-width: 800px)",
-  });
+  const responsive = {
+    desktop: {
+      breakpoint: {
+        max: 3000,
+        min: 800,
+      },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: {
+        max: 800,
+        min: 600,
+      },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: {
+        max: 600,
+        min: 0,
+      },
+      items: 1,
+    },
+  };
 
   return (
-    <Section about="carousel" placement="odd" className={`carousel-section`}>
+    <Section about="carousel" background="light" className="carousel-section">
       <Carousel
-        showThumbs={false}
-        autoPlay={true}
-        interval={3000}
-        infiniteLoop
-        centerMode={isLargeWidth}
-        centerSlidePercentage={isLargeWidth ? 50 : undefined}
+        additionalTransfrom={0}
+        arrows
+        autoPlaySpeed={3000}
+        centerMode={false}
+        draggable
+        infinite
+        keyBoardControl
+        minimumTouchDrag={80}
+        pauseOnHover
+        responsive={responsive}
+        shouldResetAutoplay
+        showDots={false}
+        slidesToSlide={1}
+        swipeable
       >
-        <div className="carousel-div">
-          <img
-            src="/ar-pineapple-1600.jpeg"
-            alt="Bolo di Anasa (pineapple upside-down-cake) from Aruba"
-            srcSet="
-            /ar-pineapple-300.jpeg 300w,
-            /ar-pineapple-800.jpeg 800w,
-            /ar-pineapple-1600.jpeg 1600w,
-           "
-            fetchpriority="high"
-          />
-          <p className="legend">🇦🇼 Bolo di Anasa from Aruba</p>
-        </div>
-        <div>
+        <div className="carousel-image">
           <img
             src="/in-kue-mangkok-1600.jpeg"
             alt="Kue Mangkok (colorful steamed cakes) from Indonesia"
@@ -45,7 +58,7 @@ export default function CarouselSection() {
           />
           <p className="legend">🇮🇩 Kue Mangkok from Indonesia</p>
         </div>
-        <div>
+        <div className="carousel-image">
           <img
             src="/tv-coconut-1600.jpeg"
             alt="Coconut Pudding from Tuvalu"
@@ -58,7 +71,7 @@ export default function CarouselSection() {
           />
           <p className="legend">🇹🇻 Coconut Pudding from Tuvalu</p>
         </div>
-        <div className="carousel-div">
+        <div className="carousel-image">
           <img
             src="/sv-blotkake-1600.jpeg"
             alt="Blotkake (strawberry and cream sponge cake) from Svalbard"
@@ -71,7 +84,7 @@ export default function CarouselSection() {
           />
           <p className="legend">🇦🇸 Bløtkake from Svalbard</p>
         </div>
-        <div>
+        <div className="carousel-image">
           <img
             src="/mg-kobo-akondo-1600.jpeg"
             alt="Koba Akondro (banana and peanut pudding) from Madagascar"
@@ -82,9 +95,9 @@ export default function CarouselSection() {
            "
             fetchpriority="low"
           />
-          <p className="legend">🇲🇬Koba Akondro from Madagascar</p>
+          <p className="legend">🇲🇬 Koba Akondro from Madagascar</p>
         </div>
-        <div>
+        <div className="carousel-image">
           <img
             src="/mt-kwarezimal-1600.jpeg"
             alt="Kwarezimal (orange blossom biscuits) from Malta"

@@ -1,10 +1,6 @@
-.map-section {
-  padding: 80px 40px;
-  background-color: white;
-}
-
 .map-container {
-  padding: 20px 0px;
+  padding: 0px;
+  padding-top: 40px;
 }
 
 .map-link-icon {
@@ -22,22 +18,26 @@
 }
 
 .map-header {
-  display: grid;
-  grid-template-columns: 1fr max-content 1fr;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .map-header-title {
-  grid-column: 2;
   scroll-margin-top: 28px;
+  color: var(--font-color-white);
+}
+
+.map-section-text {
+  color: var(--font-color-white);
 }
 
 .map-header-link {
-  grid-column: 1;
   align-self: center;
-  justify-self: end;
-  margin-right: 12px;
   opacity: 0;
   transition: opacity 0.2s;
+  position: absolute;
+  transform: translateY(-30px);
 }
 
 .map-header-link:active {
@@ -57,5 +57,8 @@
     margin-left: -20px;
     margin-bottom: -20px;
     padding-bottom: 0;
+  }
+  .map-header-link {
+    transform: translateY(-10px);
   }
 }

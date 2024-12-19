@@ -1,6 +1,23 @@
-body,
-head {
+/**
+ * Credit to https://www.joshwcomeau.com/css/custom-css-reset/
+**/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
   margin: 0;
+  --background-color-light: #ffffff;
+  --background-color-dark: #2b1100;
+  --background-color-gradient-start: #88de8880;
+  --marker-icon-color: #00c0fa;
+  --font-family: "Urbanist", sans-serif;
+  --font-color-dark: #000000;
+  --font-color-grey: #757575;
+  --font-color-white: #ffffff;
 }
 
 img,
@@ -9,7 +26,6 @@ video,
 canvas,
 svg {
   display: block;
-  max-width: 100%;
 }
 
 p,
@@ -21,8 +37,16 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
   font-family: var(--font-family);
   text-align: center;
+  text-wrap: pretty;
+  color: var(--font-color-dark);
+}
+
+p {
+  color: var(--font-color-grey);
 }
 
 h1,
@@ -31,20 +55,46 @@ h3,
 h4,
 h5,
 h6 {
-  text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+p {
+  line-height: 1.5;
+}
+
+a,
+a:visited {
+  color: black;
 }
 
 input[type="submit"],
 button {
   height: 40px;
-  border-radius: 4px;
-  border: 1px solid rgb(14, 30, 37);
-  background-color: #2d3b41;
-  color: white;
+  border-radius: 60px;
+  border: 1px solid black;
+  color: black;
   font-size: 0.875rem;
-  text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 24px;
 }
 
@@ -72,14 +122,6 @@ select {
   margin: 0;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-* {
-  --background-color-one: #a2d2f6;
-  --background-color-two: #fdfbc4;
-  --marker-icon-color: #00c0fa;
-  --font-family: "Montserrat", sans-serif;
-  --font-family-logo: "Poiret One", "sans-serif";
 }
 
 h1 > span {
