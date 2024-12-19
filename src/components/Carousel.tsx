@@ -11,9 +11,16 @@ export default function CarouselSection() {
       },
       items: 3,
     },
-    mobile: {
+    tablet: {
       breakpoint: {
         max: 800,
+        min: 600,
+      },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: {
+        max: 600,
         min: 0,
       },
       items: 1,

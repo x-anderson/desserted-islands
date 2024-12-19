@@ -1,20 +1,28 @@
 .section {
-  padding: 120px 160px;
+  padding: 80px 160px;
   color: #21232c;
 }
 
 .background-dark {
   background-color: var(--background-color-dark);
-  color: var(--background-color-light)
+  color: var(--background-color-light);
 }
 
 .background-light {
   background-color: var(--background-color-light);
-  color: var(--background-color-dark)
+  color: var(--background-color-dark);
+}
+
+.background-gradient {
+  background: linear-gradient(
+    var(--background-color-gradient-start),
+    var(--background-color-light)
+  );
+  color: var(--background-color-dark);
 }
 
 @media only screen and (max-width: 800px) {
   .section {
-    padding: 80px 20px 120px 20px;
+    padding: 60px 20px 80px 20px;
   }
 }
