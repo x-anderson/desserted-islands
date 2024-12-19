@@ -16,10 +16,6 @@ export default function Hero() {
     <Section about="hero" background="gradient" className="hero-section">
       <div className="hero-main">
         <h1>Discover the Best Desserts from Around the Globe</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Purus vel eget justo ultricies
-          scelerisque sem ac. Egestas vel et ultrices gravida interdum
-        </p>
         <button className="hero-button" onClick={() => onClickScrollToMap()}>
           <span className="hero-button-text">View the Map!</span>
           <div className="hero-button-icon-wrapper">

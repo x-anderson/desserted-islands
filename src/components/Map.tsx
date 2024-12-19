@@ -46,7 +46,7 @@ export default function MapContainer() {
           Desserted Islands Map
         </h2>
       </div>
-      <p>
+      <p className="map-section-text">
         Discover desserts recipes! Click the markers on the map below to explore
         dessert recipes from the world's island countries.
       </p>
@@ -210,7 +210,7 @@ function Map() {
             closeButton={false}
             eventHandlers={{ remove: () => handleMarkerClose() }}
           >
-            <h3>{country.name}</h3>
+            <h5>{country.name}</h5>
             {posts?.map((post, idx) => {
               return (
                 <div key={`${idx}-${post.url}`}>

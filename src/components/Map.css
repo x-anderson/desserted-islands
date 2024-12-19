@@ -1,8 +1,3 @@
-.map-section {
-  padding: 80px 40px;
-  background-color: white;
-}
-
 .map-container {
   padding: 0px;
   padding-top: 40px;
@@ -30,6 +25,11 @@
 
 .map-header-title {
   scroll-margin-top: 28px;
+  color: var(--font-color-white);
+}
+
+.map-section-text {
+  color: var(--font-color-white);
 }
 
 .map-header-link {

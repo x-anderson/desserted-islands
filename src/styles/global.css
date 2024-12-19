@@ -15,6 +15,9 @@
   --background-color-gradient-start: #88de8880;
   --marker-icon-color: #00c0fa;
   --font-family: "Urbanist", sans-serif;
+  --font-color-dark: #000000;
+  --font-color-grey: #757575;
+  --font-color-white: #ffffff;
 }
 
 img,
@@ -39,6 +42,11 @@ h6 {
   font-family: var(--font-family);
   text-align: center;
   text-wrap: pretty;
+  color: var(--font-color-dark);
+}
+
+p {
+  color: var(--font-color-grey);
 }
 
 h1,
@@ -64,6 +72,10 @@ h3 {
 
 h4 {
   font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1rem;
 }
 
 p {

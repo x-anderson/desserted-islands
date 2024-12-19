@@ -13,7 +13,7 @@ export default function Header() {
           href="https://www.instagram.com/desserted_islands/"
           aria-label="Visit the Desserted Islands Instagram account"
         >
-          <FontAwesomeIcon size="xl" className="icon" icon={faInstagram} />
+          <FontAwesomeIcon size="2xl" className="icon" icon={faInstagram} />
         </a>
         <a
           href="mailto:dessertedislands22@gmail.com"
