@@ -9,10 +9,7 @@ import {
 import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowUpRightFromSquare,
-  faLink,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -39,9 +36,6 @@ export default function MapContainer() {
   return (
     <Section about="map" background="dark">
       <div className="map-header">
-        <a className="map-header-link" href="#map">
-          <FontAwesomeIcon className="link-icon" icon={faLink} />
-        </a>
         <h2 className="map-header-title" id="map">
           Desserted Islands Map
         </h2>

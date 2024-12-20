@@ -28,12 +28,15 @@ export default function Hero() {
         </button>
       </div>
       <div className="hero-img-overlay-wrap">
-        <WorldMapImage className="hero-img-map" />
+        <WorldMapImage className="hero-svg-map" />
         <img
+          className="hero-img-pineapple"
           src="/top-view-pineapple-upside-down-cake.png"
           alt="pineapple upside down cake"
+          width={1426}
+          height={691}
         />
-        <LogoCropped className="hero-img-logo" />
+        <LogoCropped className="hero-svg-logo" />
       </div>
     </Section>
   );
