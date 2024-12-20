@@ -33,7 +33,7 @@ export default function CarouselSection() {
         additionalTransfrom={0}
         arrows
         autoPlaySpeed={3000}
-        centerMode={false}
+        centerMode
         draggable
         infinite
         keyBoardControl
@@ -41,23 +41,10 @@ export default function CarouselSection() {
         pauseOnHover
         responsive={responsive}
         shouldResetAutoplay
-        showDots={false}
+        showDots
         slidesToSlide={1}
         swipeable
       >
-        <div className="carousel-image">
-          <img
-            src="/in-kue-mangkok-1600.jpeg"
-            alt="Kue Mangkok (colorful steamed cakes) from Indonesia"
-            srcSet="
-            /in-kue-mangkok-300.jpeg 300w,
-            /in-kue-mangkok-800.jpeg 800w,
-            /in-kue-mangkok-1600.jpeg 1600w,
-           "
-            fetchpriority="low"
-          />
-          <p className="legend">🇮🇩 Kue Mangkok from Indonesia</p>
-        </div>
         <div className="carousel-image">
           <img
             src="/tv-coconut-1600.jpeg"
@@ -70,6 +57,19 @@ export default function CarouselSection() {
             fetchpriority="low"
           />
           <p className="legend">🇹🇻 Coconut Pudding from Tuvalu</p>
+        </div>
+        <div className="carousel-image">
+          <img
+            src="/in-kue-mangkok-1600.jpeg"
+            alt="Kue Mangkok (colorful steamed cakes) from Indonesia"
+            srcSet="
+            /in-kue-mangkok-300.jpeg 300w,
+            /in-kue-mangkok-800.jpeg 800w,
+            /in-kue-mangkok-1600.jpeg 1600w,
+           "
+            fetchpriority="low"
+          />
+          <p className="legend">🇮🇩 Kue Mangkok from Indonesia</p>
         </div>
         <div className="carousel-image">
           <img
