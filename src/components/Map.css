@@ -48,6 +48,10 @@
   opacity: 100;
 }
 
+.map-popover-content {
+  margin-top: 8px;
+}
+
 @media only screen and (max-width: 800px) {
   .leaflet-container {
     height: 70vh;

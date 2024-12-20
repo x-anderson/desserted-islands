@@ -8,8 +8,6 @@ import {
 } from "react-leaflet";
 import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import "./Map.css";
 import Section from "./Section";
 import { useLocation, useSearchParams } from "react-router-dom";
@@ -207,20 +205,16 @@ function Map() {
             <h5>{country.name}</h5>
             {posts?.map((post, idx) => {
               return (
-                <div key={`${idx}-${post.url}`}>
-                  {post.subCountry && <h4>{post.subCountry}</h4>}
+                <div key={`${idx}-${post.url}`} className="map-popover-content">
+                  {post.subCountry && <h6>{post.subCountry}</h6>}
                   <a
-                    className="btn"
                     href={post.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Link to the Instagram post (Opens in new tab)"
                   >
-                    Click for deliciousness!
+                    View dessert on Instagram!
                     <br></br>
-                    <FontAwesomeIcon
-                      className="map-link-icon"
-                      icon={faArrowUpRightFromSquare}
-                    />
                   </a>
                 </div>
               );
