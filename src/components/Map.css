@@ -52,6 +52,10 @@
   margin-top: 8px;
 }
 
+.country-autocomplete {
+  background-color: white;
+}
+
 @media only screen and (max-width: 800px) {
   .leaflet-container {
     height: 70vh;

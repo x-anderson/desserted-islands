@@ -11,6 +11,8 @@ import L from "leaflet";
 import "./Map.css";
 import Section from "./Section";
 import { useLocation, useSearchParams } from "react-router-dom";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
 
 require("leaflet-spin");
 
@@ -69,9 +71,17 @@ function Map() {
   map.scrollWheelZoom.disable();
 
   const [countries, setCountries] = useState<Country[] | undefined>();
+  const countriesByAlpha2 = useMemo(() => {
+    const record: Record<string, Country> = {};
+    countries?.forEach((country) => {
+      record[country.alpha2] = country;
+    });
+    return record;
+  }, [countries]);
   const [countryPosts, setCountryPosts] = useState<{
     [alpha2: string]: CountryPost[] | undefined;
   }>();
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -104,7 +114,11 @@ function Map() {
           method: "GET",
         }
       );
-      setCountries(islandCountries);
+      setCountries(
+        islandCountries.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        })
+      );
     };
 
     fetchPosts().then(() => {
@@ -115,31 +129,32 @@ function Map() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleMarkerClick = useCallback(
+  const handleSetAlpha2Params = useCallback(
     (alpha2: string) => {
       setSearchParams((params) => {
         params.set(SELECTED_COUNTRY_URL_PARAM, alpha2);
         return params;
       });
+      const newCountry = countriesByAlpha2[alpha2];
+      setSelectedCountry(newCountry);
     },
-    [setSearchParams]
+    [countriesByAlpha2, setSearchParams]
   );
 
-  const handleMarkerClose = useCallback(() => {
+  const handleClearAlpha2Params = useCallback(() => {
     setSearchParams((params) => {
       params.delete(SELECTED_COUNTRY_URL_PARAM);
       return params;
     });
+    setSelectedCountry(null);
   }, [setSearchParams]);
 
   const popupRefs = useRef<{ [alpha2: string]: L.Popup | null }>({});
 
   useEffect(() => {
     const selectedCountryAlpha2 = searchParams.get(SELECTED_COUNTRY_URL_PARAM);
-    if (SELECTED_COUNTRY_URL_PARAM) {
-      const selectedCountry = countries?.find(
-        (country) => country.alpha2 === selectedCountryAlpha2
-      );
+    if (selectedCountryAlpha2) {
+      const selectedCountry = countriesByAlpha2[selectedCountryAlpha2];
       if (selectedCountry) {
         map.flyTo([selectedCountry.lat, selectedCountry.lng]);
         const selectedCountryRef = popupRefs.current?.[selectedCountry.alpha2];
@@ -150,11 +165,20 @@ function Map() {
           ]);
           map.openPopup(selectedCountryRef);
         }
+        setSelectedCountry(selectedCountry);
       }
     }
     // We only want this to run if countries change (which should happen only on load)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries]);
+  }, [countries, selectedCountry]);
+
+  const handleSelectCountryFromAutocomplete = (country: Country | null) => {
+    if (country) {
+      handleSetAlpha2Params(country.alpha2);
+    } else {
+      handleClearAlpha2Params();
+    }
+  };
 
   const countryMarkers = useMemo(() => {
     if (!countryPosts || !countries) {
@@ -178,10 +202,13 @@ function Map() {
         });
       }
     });
-    return countriesUpdatedLng.map((country, idx) => {
+    // TODO - Re-instate the "infinite" countries view. We store each country popup as a ref to allow
+    // us to open that popup specifically by targetting the reg in `map.openpopup()` method. But
+    // this breaks if we use the "infinite" countries view.
+    return countries.map((country, idx) => {
       const posts = countryPosts[country.alpha2];
       const hasPost = posts?.length && posts.length > 0;
-      const firstMapCountry = country.lng >= 0 && country.lng <= 360;
+      //const firstMapCountry = country.lng >= 0 && country.lng <= 360;
       return (
         <Marker
           key={`${country.alpha2}-${idx}`}
@@ -190,17 +217,17 @@ function Map() {
           icon={createIcon(hasPost ? "cake" : "spinner")}
           zIndexOffset={hasPost ? 1000 : undefined}
           eventHandlers={{
-            click: () => handleMarkerClick(country.alpha2),
+            click: () => handleSetAlpha2Params(country.alpha2),
           }}
         >
           <Popup
             ref={(r) => {
-              if (firstMapCountry && popupRefs.current) {
+              if (popupRefs.current) {
                 popupRefs.current[country.alpha2] = r;
               }
             }}
             closeButton={false}
-            eventHandlers={{ remove: () => handleMarkerClose() }}
+            eventHandlers={{ remove: () => handleClearAlpha2Params() }}
           >
             <h5>{country.name}</h5>
             {posts?.map((post, idx) => {
@@ -224,7 +251,7 @@ function Map() {
         </Marker>
       );
     });
-  }, [countryPosts, countries, handleMarkerClick, handleMarkerClose]);
+  }, [countryPosts, countries, handleSetAlpha2Params, handleClearAlpha2Params]);
 
   return (
     <>
@@ -232,6 +259,28 @@ function Map() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
       />
+      {countries && (
+        <div
+          style={{ pointerEvents: "all", top: "10px", right: "10px" }}
+          className="country-autocomplete leaflet-top leaflet-right"
+        >
+          <Autocomplete
+            options={countries}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Find an island country..." />
+            )}
+            getOptionLabel={(option) => {
+              return option.name;
+            }}
+            onChange={(e, value) => {
+              handleSelectCountryFromAutocomplete(value);
+            }}
+            value={selectedCountry || null}
+          />
+        </div>
+      )}
+
       {countryMarkers}
     </>
   );
