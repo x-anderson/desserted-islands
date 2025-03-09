@@ -9,3 +9,9 @@ What do the world's 94 island countries eat for dessert? Well....
 This site is an interactive map that links to delicious dessert recipes for (most...) of the world's islands. The desserts are all created (i.e. baked, cooked, fried, steamed...) by me and hosted on my [Instagram](https://www.instagram.com/desserted_islands/).
 
 It's a React app, and uses Leaflet to create the base for the customized map (relying on [React-Leaflet](https://react-leaflet.js.org/) components).
+
+# Installation
+The site is deployed via Netlify, and uses Netlify serverless functions. Authentication via Netlify is required.
+
+1. Install Netlify-Cli ([here](https://docs.netlify.com/cli/get-started/#installation))
+2. Run `netlify dev`
