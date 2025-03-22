@@ -45,7 +45,12 @@ export default function MapContainer() {
         dessert recipes from the world's island countries.
       </p>
       <div className="map-container">
-        <ReactLeafletMapContainer center={[51.505, -0.09]} zoom={2} minZoom={2}>
+        <ReactLeafletMapContainer
+          center={[51.505, -0.09]}
+          zoom={2}
+          minZoom={2}
+          worldCopyJump
+        >
           <Map />
         </ReactLeafletMapContainer>
       </div>
