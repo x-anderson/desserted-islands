@@ -202,13 +202,9 @@ function Map() {
         });
       }
     });
-    // TODO - Re-instate the "infinite" countries view. We store each country popup as a ref to allow
-    // us to open that popup specifically by targetting the reg in `map.openpopup()` method. But
-    // this breaks if we use the "infinite" countries view.
     return countries.map((country, idx) => {
       const posts = countryPosts[country.alpha2];
       const hasPost = posts?.length && posts.length > 0;
-      //const firstMapCountry = country.lng >= 0 && country.lng <= 360;
       return (
         <Marker
           key={`${country.alpha2}-${idx}`}
