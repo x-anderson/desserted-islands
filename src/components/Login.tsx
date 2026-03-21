@@ -32,7 +32,7 @@ export default function Login() {
         "/.netlify/functions/get_countries",
         {
           method: "GET",
-        }
+        },
       );
       setCountries(islandCountries);
     };
@@ -54,15 +54,38 @@ export default function Login() {
     toast.promise(createPost(data), {
       pending: "Creating post...",
       success: "Post created!",
-      error: "Error in creating post.",
+      error: {
+        render({ data }) {
+          return `Error creating post: ${
+            data instanceof Error ? data.message : "Unknown error"
+          }`;
+        },
+      },
     });
   };
 
   const createPost = async (data: FormValues) => {
-    return await fetch("/.netlify/functions/create_post", {
+    const res = await fetch("/.netlify/functions/create_post", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    if (!res.ok) {
+      const ct = res.headers.get("content-type") || "";
+      let msg = "";
+      if (ct.includes("application/json")) {
+        try {
+          const json = await res.json();
+          msg = json?.message || json?.error || JSON.stringify(json);
+        } catch {
+          // fallthrough
+        }
+      }
+      if (!msg)
+        msg = await res.text().catch(() => `Request failed (${res.status})`);
+      throw new Error(msg || `Request failed (${res.status})`);
+    }
+    return res;
   };
 
   const countryAlpha2 = countries?.map((country) => country.alpha2);
