@@ -1,95 +1,192 @@
-.world-map-image {
-  color: lightgray;
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-light);
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .hero-section {
+    padding: 2.5rem 1.25rem;
+  }
+}
+
+.shape-blob {
+  position: absolute;
+  fill: currentColor;
+}
+
+.shape-blob-top-left {
+  top: -5rem;
+  left: -5rem;
+  width: 20rem;
+  height: 20rem;
+  opacity: 0.08;
+  color: var(--color-primary);
+}
+
+.shape-blob-bottom-right {
+  bottom: -6rem;
+  right: -6rem;
+  width: 28rem;
+  height: 28rem;
+  opacity: 0.07;
+  color: var(--color-secondary);
+}
+
+.shape-diamond {
+  position: absolute;
+  fill: currentColor;
+}
+
+.shape-diamond-top-right {
+  top: 9rem;
+  right: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  opacity: 0.18;
+  color: var(--color-accent);
+}
+
+.shape-diamond-bottom-left {
+  bottom: 7rem;
+  left: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  opacity: 0.18;
+  color: var(--color-primary);
+  transform: rotate(12deg);
+}
+
+.hero-logo-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.hero-logo-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(28px);
+  background-color: var(--color-accent);
+  opacity: 0.3;
+  transform: scale(0.75);
+}
+
+.hero-logo {
+  width: 10rem;
+  height: 10rem;
+}
+
+@media (min-width: 600px) {
+  .hero-logo {
+    width: 18rem;
+    height: 18rem;
+  }
 }
 
 .hero-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
-  margin-bottom: 40px;
-  z-index: 1;
   position: relative;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  gap: 1.5rem;
+  max-width: 64rem;
 }
 
-.hero-main > h1 {
+.hero-title-highlight {
+  color: var(--color-primary);
+  font-style: italic;
+}
+
+.hero-progress-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  background-color: var(--color-bg-normal);
+  border: 1px solid var(--color-border);
+  margin-bottom: 2rem;
+  margin-top: 0.5rem;
+}
+
+.hero-progress-emoji {
+  font-size: 1.5rem;
+}
+
+.hero-progress-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--color-dark);
+  font-size: 0.95rem;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.hero-progress-number {
+  color: var(--color-primary);
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
-.hero-section {
-  padding: 40px 120px 0 120px;
+.hero-progress-label {
+  color: var(--color-muted);
 }
 
-.hero-img-overlay-wrap {
-  position: relative;
+.hero-progress-bar-container {
   width: 100%;
-  display: inline-block;
-  top: 20px;
-  clip-path: inset(-20% 0 0 0);
+  max-width: 28rem;
+  margin-bottom: 1rem;
 }
 
-.hero-img-overlay-wrap img {
-  position: relative;
-  display: block;
-  max-width: 65%;
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
+.hero-progress-bar {
+  height: 0.75rem;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: var(--color-border);
+  margin-top: 0.5rem;
 }
 
-.hero-img-overlay-wrap > svg {
-  position: absolute;
+.hero-progress-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-accent) 100%
+  );
 }
 
-.hero-svg-map {
-  top: -20%;
-  left: 0;
-  width: 100%;
-  color: lightgray;
-}
-
-.hero-svg-logo {
-  left: 57%;
-  top: 2.5%;
-  width: 50%;
-}
-
-.hero-img-pineapple {
-  aspect-ratio: 1426 / 691;
-}
-
-.hero-button {
-  width: 230px;
-  height: 60px;
-  background-color: #f5c145;
-  color: black;
-  border: none;
-  transition: background-color 0.1s ease-out;
+.hero-progress-bar-labels {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 0 20px;
+  justify-content: space-between;
+  margin-top: 0.375rem;
 }
 
-.hero-button:hover {
-  background-color: #f5c14580;
+.hero-progress-bar-label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-muted);
 }
 
-.hero-button-text {
-  font-size: 1.2rem;
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-@media only screen and (max-width: 800px) {
-  .hero-section {
-    padding: 40px 20px 0 20px;
-  }
-  .hero-img-overlay-wrap img {
-    max-width: 100%;
-  }
-  .hero-svg-logo {
-    left: 47%;
-    top: 36%;
-    width: 50%;
+@media (min-width: 600px) {
+  .hero-buttons {
+    flex-direction: row;
   }
 }

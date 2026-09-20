@@ -1,12 +1,4 @@
-.map-container {
-  padding: 0px;
-  padding-top: 40px;
-}
-
-.map-link-icon {
-  margin-top: 5px;
-}
-
+/* leafletjs CSS - Required to render the map */
 .leaflet-container {
   width: 100%;
   height: 100vh;
@@ -15,41 +7,19 @@
 .leaflet-popup-content {
   width: 120px;
   text-align: center;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-dark);
 }
 
-.map-header {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
-.map-header-title {
-  scroll-margin-top: 28px;
-  color: var(--font-color-white);
-}
-
-.map-section-text {
-  color: var(--font-color-white);
-}
-
-.map-header-link {
-  align-self: center;
-  opacity: 0;
-  transition: opacity 0.2s;
-  position: absolute;
-  transform: translateY(-30px);
-}
-
-.map-header-link:active {
-  color: currentColor;
-}
-
-.map-header:hover .map-header-link {
-  opacity: 100;
+.map-link-icon {
+  margin-top: 5px;
 }
 
 .map-popover-content {
   margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
 }
 
 .country-autocomplete {
@@ -69,4 +39,52 @@
   .map-header-link {
     transform: translateY(-10px);
   }
+}
+
+.map-section {
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+  background-color: var(--color-bg-light);
+}
+
+@media (min-width: 600px) {
+  .about-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .about-section {
+    padding: 6rem 1.5rem;
+  }
+}
+
+.map-header-container {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  p {
+    margin-top: 1.25rem;
+  }
+}
+
+.map-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-top: 0.5rem;
+}
+
+.map-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.map-legend-item-img {
+  height: 2.5rem;
 }
