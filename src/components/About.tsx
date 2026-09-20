@@ -3,12 +3,13 @@ import Badge from "./Badge";
 import Button from "./Button";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Skeleton from "./Skeleton";
+import { useCountryCounts } from "../data/utils";
 
 const IG_URL = "https://www.instagram.com/desserted_islands/";
-const DONE_COUNT = 99;
-const TOTAL_COUNT = 103;
 
 export default function About() {
+  const { totalCountries, countriesCompleted, loading } = useCountryCounts();
   return (
     <section className="about-section" id="about">
       <div className="about-container">
@@ -64,12 +65,14 @@ export default function About() {
 
         <div className="about-stat-grid">
           <div className="about-stat-card about-stat-baked">
-            <span className="about-stat-number">{DONE_COUNT}</span>
+            <span className="about-stat-number">
+              {loading ? <Skeleton /> : countriesCompleted}
+            </span>
             <span className="about-stat-label">Islands baked</span>
           </div>
           <div className="about-stat-card about-stat-remaining">
             <span className="about-stat-number">
-              {TOTAL_COUNT - DONE_COUNT}
+              {loading ? <Skeleton /> : totalCountries - countriesCompleted}
             </span>
             <span className="about-stat-label">Still to go</span>
           </div>
