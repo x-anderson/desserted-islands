@@ -4,10 +4,8 @@ import Button from "./Button";
 import { faMap } from "@fortawesome/free-regular-svg-icons";
 import { faBirthdayCake } from "@fortawesome/free-solid-svg-icons";
 import { HEADER_HEIGHT_MOBILE } from "./Header";
-
-// TODO - Fetch data?
-const DONE_COUNT = 99;
-const TOTAL_COUNT = 103;
+import Skeleton from "./Skeleton";
+import { useCountryCounts } from "../data/utils";
 
 function ShapeBlob({ className }: { className?: string }) {
   return (
@@ -26,6 +24,7 @@ function ShapeDiamond({ className }: { className?: string }) {
 }
 
 export default function Hero() {
+  const { totalCountries, countriesCompleted, loading } = useCountryCounts();
   return (
     <section
       style={{ marginTop: `${HEADER_HEIGHT_MOBILE}px` }}
@@ -49,32 +48,48 @@ export default function Hero() {
         </h1>
 
         <p>
-          There are <strong>{TOTAL_COUNT} island countries</strong> in the
+          There are <strong>{totalCountries} island countries</strong> in the
           world. <em>What do you think they eat for dessert?</em>
         </p>
 
         <div className="hero-progress-bar-container">
           <span className="hero-progress-emoji">🍰</span>
+
           <span className="hero-progress-text">
-            <span className="hero-progress-number">{DONE_COUNT}</span>
+            <span className="hero-progress-number">
+              {loading ? <Skeleton width="1.6rem" /> : countriesCompleted}
+            </span>
+
             <span className="hero-progress-label">
               {" "}
-              of {TOTAL_COUNT} islands baked
+              of {totalCountries} islands baked
             </span>
           </span>
+
           <span className="hero-progress-emoji">🌊</span>
-          <div className="hero-progress-bar">
-            <div
-              className="hero-progress-bar-fill"
-              style={{
-                width: `${(DONE_COUNT / TOTAL_COUNT) * 100}%`,
-              }}
-            />
+
+          <div className={`hero-progress-bar ${loading ? "is-loading" : ""}`}>
+            {!loading && (
+              <div
+                className="hero-progress-bar-fill"
+                style={{
+                  width: `${(countriesCompleted / totalCountries) * 100}%`,
+                }}
+              />
+            )}
           </div>
+
           <div className="hero-progress-bar-labels">
             <span className="hero-progress-bar-label">Started</span>
+
             <span className="hero-progress-bar-label">
-              {Math.round((DONE_COUNT / TOTAL_COUNT) * 100)}% complete
+              {loading ? (
+                <Skeleton width="1.5rem" />
+              ) : (
+                `${Math.round(
+                  (countriesCompleted / totalCountries) * 100,
+                )}% complete`
+              )}
             </span>
           </div>
         </div>

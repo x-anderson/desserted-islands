@@ -190,3 +190,23 @@
     flex-direction: row;
   }
 }
+
+.hero-progress-bar.is-loading::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 40%;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.35);
+  animation: progress-skeleton 1.2s ease-in-out infinite;
+}
+
+@keyframes progress-skeleton {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(350%);
+  }
+}

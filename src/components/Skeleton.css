@@ -1,0 +1,26 @@
+.skeleton {
+  display: inline-block;
+  height: 1em;
+  border-radius: 4px;
+
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 0%,
+    var(--color-bg-normal) 50%,
+    var(--color-border) 100%
+  );
+
+  background-size: 200% 100%;
+  animation: progress-loading 1.5s infinite;
+  vertical-align: middle;
+}
+
+@keyframes progress-loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

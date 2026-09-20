@@ -6,7 +6,7 @@ import {
   Popup,
   useMap,
 } from "react-leaflet";
-import { Country, CountryPost } from "../data/types";
+import { Country } from "../data/types";
 import L from "leaflet";
 import "./Map.css";
 import Badge from "./Badge";
@@ -15,6 +15,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import cakeMarker from "../img/cake_marker.png";
 import spinnerMarker from "../img/spinner_marker.png";
+import { useCountries } from "../data/CountriesProvider";
 
 require("leaflet-spin");
 
@@ -78,6 +79,7 @@ export default function MapContainer() {
 const SELECTED_COUNTRY_URL_PARAM = "selectedCountry";
 
 function Map() {
+  const { countries, posts, loading } = useCountries();
   const createIcon = (icon: "cake" | "spinner") => {
     return L.icon({
       iconUrl: require(icon === "cake"
@@ -92,7 +94,18 @@ function Map() {
   const map = useMap();
   map.scrollWheelZoom.disable();
 
-  const [countries, setCountries] = useState<Country[] | undefined>();
+  useEffect(() => {
+    // @ts-ignore
+    map.spin(loading, {
+      color: "var(--marker-icon-color)",
+    });
+
+    return () => {
+      // @ts-ignore
+      map.spin(false);
+    };
+  }, [map, loading]);
+
   const countriesByAlpha2 = useMemo(() => {
     const record: Record<string, Country> = {};
     countries?.forEach((country) => {
@@ -100,54 +113,8 @@ function Map() {
     });
     return record;
   }, [countries]);
-  const [countryPosts, setCountryPosts] = useState<{
-    [alpha2: string]: CountryPost[] | undefined;
-  }>();
+
   const [selectedCountry, setSelectedCountry] = useState<Country | null>();
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      // @ts-ignore
-      map.spin(true, { color: `var(--marker-icon-color)` });
-      const islandPosts = await request<CountryPost[]>(
-        "/.netlify/functions/get_posts",
-        {
-          method: "GET",
-        },
-      );
-
-      const formattedCountryPosts: {
-        [alpha2: string]: CountryPost[];
-      } = {};
-      islandPosts?.forEach((countryPost) => {
-        if (!formattedCountryPosts[countryPost.countryAlpha2]) {
-          formattedCountryPosts[countryPost.countryAlpha2] = [];
-        }
-        formattedCountryPosts[countryPost.countryAlpha2] = [
-          ...formattedCountryPosts[countryPost.countryAlpha2],
-          countryPost,
-        ];
-      });
-      setCountryPosts(formattedCountryPosts);
-
-      const islandCountries = await request<Country[]>(
-        "/.netlify/functions/get_countries",
-        {
-          method: "GET",
-        },
-      );
-      setCountries(
-        islandCountries.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        }),
-      );
-    };
-
-    fetchPosts().then(() => {
-      // @ts-ignore
-      map.spin(false);
-    });
-  }, [map]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -203,7 +170,7 @@ function Map() {
   };
 
   const countryMarkers = useMemo(() => {
-    if (!countryPosts || !countries) {
+    if (!posts || !countries) {
       return;
     }
     // When the user pans to another copy of the map, they do not see the markers on that copy
@@ -225,8 +192,8 @@ function Map() {
       }
     });
     return countries.map((country, idx) => {
-      const posts = countryPosts[country.alpha2];
-      const hasPost = posts?.length && posts.length > 0;
+      const postsForCountry = posts[country.alpha2];
+      const hasPost = postsForCountry?.length && postsForCountry.length > 0;
       return (
         <Marker
           key={`${country.alpha2}-${idx}`}
@@ -248,7 +215,7 @@ function Map() {
             eventHandlers={{ remove: () => handleClearAlpha2Params() }}
           >
             <h5>{country.name}</h5>
-            {posts?.map((post, idx) => {
+            {postsForCountry?.map((post, idx) => {
               return (
                 <div key={`${idx}-${post.url}`} className="map-popover-content">
                   {post.subCountry && <h6>{post.subCountry}</h6>}
@@ -269,7 +236,7 @@ function Map() {
         </Marker>
       );
     });
-  }, [countryPosts, countries, handleSetAlpha2Params, handleClearAlpha2Params]);
+  }, [posts, countries, handleSetAlpha2Params, handleClearAlpha2Params]);
 
   return (
     <>
@@ -302,14 +269,4 @@ function Map() {
       {countryMarkers}
     </>
   );
-}
-
-// Helper to handle fetch type assertions
-async function request<TResponse>(
-  url: string,
-  config: RequestInit = {},
-): Promise<TResponse> {
-  return fetch(url, config)
-    .then((response) => response.json())
-    .then((data) => data as TResponse);
 }
