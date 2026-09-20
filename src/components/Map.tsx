@@ -9,10 +9,12 @@ import {
 import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
 import "./Map.css";
-import Section from "./Section";
+import Badge from "./Badge";
 import { useLocation, useSearchParams } from "react-router-dom";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import cakeMarker from "../img/cake_marker.png";
+import spinnerMarker from "../img/spinner_marker.png";
 
 require("leaflet-spin");
 
@@ -34,16 +36,31 @@ export default function MapContainer() {
   }, [location]);
 
   return (
-    <Section about="map" background="dark">
-      <div className="map-header">
-        <h2 className="map-header-title" id="map">
-          Desserted Islands Map
-        </h2>
+    <section className="map-section" id="the-map">
+      <div className="map-header-container">
+        <Badge color="secondary" title="The Map" />
+        <h2>Where have I been?</h2>
+        <p>Click any marker to see the bake on Instagram.</p>
+        <div className="map-legend">
+          <div className="map-legend-item">
+            <img
+              className="map-legend-item-img"
+              src={cakeMarker}
+              alt="Baked marker"
+            />
+            <span>Baked</span>
+          </div>
+          <div className="map-legend-item">
+            <img
+              className="map-legend-item-img"
+              src={spinnerMarker}
+              alt="Coming soon marker"
+            />
+            <span>Coming soon</span>
+          </div>
+        </div>
       </div>
-      <p className="map-section-text">
-        Discover desserts recipes! Click the markers on the map below to explore
-        dessert recipes from the world's island countries.
-      </p>
+
       <div className="map-container">
         <ReactLeafletMapContainer
           center={[51.505, -0.09]}
@@ -54,7 +71,7 @@ export default function MapContainer() {
           <Map />
         </ReactLeafletMapContainer>
       </div>
-    </Section>
+    </section>
   );
 }
 
@@ -96,7 +113,7 @@ function Map() {
         "/.netlify/functions/get_posts",
         {
           method: "GET",
-        }
+        },
       );
 
       const formattedCountryPosts: {
@@ -117,12 +134,12 @@ function Map() {
         "/.netlify/functions/get_countries",
         {
           method: "GET",
-        }
+        },
       );
       setCountries(
         islandCountries.sort((a, b) => {
           return a.name.localeCompare(b.name);
-        })
+        }),
       );
     };
 
@@ -143,7 +160,7 @@ function Map() {
       const newCountry = countriesByAlpha2[alpha2];
       setSelectedCountry(newCountry);
     },
-    [countriesByAlpha2, setSearchParams]
+    [countriesByAlpha2, setSearchParams],
   );
 
   const handleClearAlpha2Params = useCallback(() => {
@@ -290,7 +307,7 @@ function Map() {
 // Helper to handle fetch type assertions
 async function request<TResponse>(
   url: string,
-  config: RequestInit = {}
+  config: RequestInit = {},
 ): Promise<TResponse> {
   return fetch(url, config)
     .then((response) => response.json())

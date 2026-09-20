@@ -1,5 +1,5 @@
 import About from "../components/About";
-import CarouselSection from "../components/Carousel";
+import Gallery from "../components/Gallery";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Map from "../components/Map";
@@ -10,9 +10,9 @@ export default function Home() {
     <>
       <Header />
       <Hero />
-      <CarouselSection />
       <About />
       <Map />
+      <Gallery />
       <Footer />
     </>
   );

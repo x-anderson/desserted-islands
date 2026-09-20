@@ -1,0 +1,113 @@
+.gallery-section {
+  padding: 6rem 1.5rem;
+  overflow: hidden;
+  background-color: var(--color-bg-normal);
+}
+
+.gallery-container {
+  position: relative;
+  max-width: 80rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.gallery-header p {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gallery-grid .gallery-item:last-child {
+    grid-column: span 3;
+    aspect-ratio: 1 / 0.25;
+  }
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  display: block;
+  background-color: var(--color-border);
+  text-decoration: none;
+  aspect-ratio: 1 / 1;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.gallery-item:first-child {
+  aspect-ratio: 1 / 2.1;
+  grid-row: span 2;
+}
+
+.gallery-item:last-child {
+  aspect-ratio: 1 / 0.5;
+  grid-column: span 2;
+}
+
+.gallery-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover .gallery-item-image {
+  transform: scale(1.06);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  background: linear-gradient(
+    to top,
+    rgba(28, 16, 8, 0.82) 0%,
+    transparent 65%
+  );
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+}
+
+.gallery-item-country {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.125rem;
+  color: var(--color-accent);
+  font-family: var(--font-body);
+}
+
+.gallery-item-dessert {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-bg-light);
+  font-style: italic;
+}
