@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 export const HEADER_HEIGHT_MOBILE = 62;
 const IG_URL = "https://www.instagram.com/desserted_islands/";
+const MENU_ITEMS = ["About", "Gallery", "The Map"];
 
 export default function Header() {
   return (
@@ -27,7 +28,7 @@ function Nav() {
         <span className="nav-logo-text">Desserted Islands</span>
       </Link>
       <div className="nav-menu">
-        {["About", "The Map", "Gallery"].map((item) => (
+        {MENU_ITEMS.map((item) => (
           <a
             className="nav-link"
             key={item}
@@ -80,7 +81,7 @@ function MobileNav() {
       </div>
       {open && (
         <div className="mobile-nav-menu">
-          {["About", "The Map", "Gallery"].map((item) => (
+          {MENU_ITEMS.map((item) => (
             <a
               className="nav-link"
               key={item}
