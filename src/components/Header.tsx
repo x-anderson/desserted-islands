@@ -5,6 +5,7 @@ import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import LogoCropped from "./LogoCropped";
+import { Link } from "react-router-dom";
 
 export const HEADER_HEIGHT_MOBILE = 62;
 const IG_URL = "https://www.instagram.com/desserted_islands/";
@@ -21,10 +22,10 @@ export default function Header() {
 function Nav() {
   return (
     <nav className="nav">
-      <a href="#hero" className="nav-logo">
+      <Link to="/" className="nav-home" aria-label="Home">
         <LogoCropped className="mobile-nav-logo-icon" />
         <span className="nav-logo-text">Desserted Islands</span>
-      </a>
+      </Link>
       <div className="nav-menu">
         {["About", "The Map", "Gallery"].map((item) => (
           <a
@@ -59,9 +60,9 @@ function MobileNav() {
   return (
     <nav style={{ height: `${HEADER_HEIGHT_MOBILE}px` }} className="mobile-nav">
       <div className="mobile-nav-header">
-        <a href="#hero">
+        <Link to="/" className="header-home" aria-label="Home">
           <LogoCropped className="mobile-nav-logo-icon" />
-        </a>
+        </Link>
         <span className="nav-logo-text">Desserted Islands</span>
         <button
           onClick={() => setOpen(!open)}

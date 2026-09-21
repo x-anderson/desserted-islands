@@ -29,7 +29,6 @@ export default function Hero() {
     <section
       style={{ marginTop: `${HEADER_HEIGHT_MOBILE}px` }}
       className="hero-section"
-      id="hero"
     >
       <ShapeBlob className="shape-blob shape-blob-top-left" />
       <ShapeBlob className="shape-blob shape-blob-bottom-right" />
