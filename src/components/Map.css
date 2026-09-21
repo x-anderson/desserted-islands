@@ -44,7 +44,7 @@
 .map-section {
   padding: 6rem 1.5rem;
   overflow: hidden;
-  background-color: var(--color-bg-light);
+  background-color: var(--color-bg-normal);
 }
 
 @media (min-width: 600px) {

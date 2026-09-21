@@ -41,7 +41,7 @@ export default function MapContainer() {
       <div className="map-header-container">
         <Badge color="secondary" title="The Map" />
         <h2>Where have I been?</h2>
-        <p>Click any marker to see the bake on Instagram.</p>
+        <p>Click a country to discover the dessert I've baked there!</p>
         <div className="map-legend">
           <div className="map-legend-item">
             <img

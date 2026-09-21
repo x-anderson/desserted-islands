@@ -59,6 +59,12 @@
   color: var(--color-primary);
 }
 
+.nav-home {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
 /* Mobile Navigation */
 .mobile-nav {
   position: fixed;
