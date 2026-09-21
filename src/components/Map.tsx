@@ -197,7 +197,6 @@ function Map() {
       return (
         <Marker
           key={`${country.alpha2}-${idx}`}
-          opacity={hasPost ? 1 : 0.5}
           position={{ lat: country.lat, lng: country.lng }}
           icon={createIcon(hasPost ? "cake" : "spinner")}
           zIndexOffset={hasPost ? 1000 : undefined}
