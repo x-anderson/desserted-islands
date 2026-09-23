@@ -64,7 +64,7 @@ export default function Gallery() {
     <section className="gallery-section" id="gallery">
       <div className="gallery-container">
         <div className="gallery-header">
-          <Badge title="The Bakes" color="accent" />
+          <Badge title="The Bakes" />
           <h2>A taste of the collection</h2>
           <p>
             Every photo links to the full story on Instagram - ingredients,

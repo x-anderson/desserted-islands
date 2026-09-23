@@ -14,7 +14,7 @@ export default function About() {
     <section className="about-section" id="about">
       <div className="about-container">
         <div className="about-content">
-          <Badge color="accent" title="The Project" />
+          <Badge title="The Project" />
           <h2>
             Baking my way around{" "}
             <span className="about-title-highlight">every island on Earth</span>
@@ -77,7 +77,7 @@ export default function About() {
             <span className="about-stat-label">Still to go</span>
           </div>
           <div className="about-stat-card about-stat-continents">
-            <span className="about-stat-number">5</span>
+            <span className="about-stat-number">6</span>
             <span className="about-stat-label">Continents covered</span>
           </div>
           <div className="about-stat-card about-stat-calories">
