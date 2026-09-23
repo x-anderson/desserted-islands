@@ -15,7 +15,7 @@
 }
 
 .btn:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 .btn:active {
@@ -36,6 +36,11 @@
 .btn-secondary:hover {
   background-color: #f5e6d0;
   opacity: 1;
+}
+
+.btn-muted {
+  border: 2px solid var(--color-bg-normal);
+  color: var(--color-bg-normal);
 }
 
 .btn-lg {

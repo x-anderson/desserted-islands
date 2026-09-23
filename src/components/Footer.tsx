@@ -33,7 +33,7 @@ export default function Footer() {
 
         <div className="footer-links">
           <Button
-            variant="secondary"
+            variant="muted"
             href={IG_URL}
             onClick={(e) => {
               if (typeof window !== "undefined") {
@@ -47,7 +47,7 @@ export default function Footer() {
             @desserted_islands
           </Button>
           <Button
-            variant="secondary"
+            variant="muted"
             href="mailto:dessertedislands22@gmail.com"
             icon={faEnvelope}
             size="sm"

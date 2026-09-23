@@ -12,16 +12,6 @@
   margin-bottom: 1.25rem;
 }
 
-.badge-primary {
-  background-color: var(--color-primary);
-  color: var(--color-bg-light);
-}
-
-.badge-secondary {
-  background-color: var(--color-secondary);
-  color: var(--color-bg-light);
-}
-
 .badge-accent {
   background-color: var(--color-accent);
   color: var(--color-dark);

@@ -10,7 +10,7 @@
 
 :root {
   /* Colors */
-  --color-primary: #e8543a;
+  --color-primary: #d23119;
   --color-secondary: #1a9b8c;
   --color-accent: #f5c842;
   --color-dark: #1c1008;
@@ -20,18 +20,11 @@
   --color-bg-normal: #fff2df;
   --color-border: #e8d5b8;
   --color-border-light: #bde8e2;
+  --marker-icon-color: #e8543a;
 
   /* Fonts */
   --font-display: "Fraunces", serif;
   --font-body: "Outfit", sans-serif;
-
-  /* @deprecated */
-  --background-color-light: #fff8ee;
-  --background-color-dark: #1c1008;
-  --marker-icon-color: #e8543a;
-  --font-color-dark: #1c1008;
-  --font-color-grey: #7a5e42;
-  --font-color-white: #fff8ee;
 }
 
 * {

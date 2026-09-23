@@ -39,7 +39,7 @@ export default function MapContainer() {
   return (
     <section className="map-section" id="the-map">
       <div className="map-header-container">
-        <Badge color="secondary" title="The Map" />
+        <Badge title="The Map" />
         <h2>Where have I been?</h2>
         <p>Click a country to discover the dessert I've baked there!</p>
         <div className="map-legend">

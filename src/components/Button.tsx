@@ -4,7 +4,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ButtonProps {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "muted";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
   children: React.ReactNode;

@@ -2,10 +2,9 @@ import "./Badge.css";
 
 interface BadgeProps {
   title: string;
-  color?: "primary" | "secondary" | "accent";
 }
 
-export default function Badge({ title, color }: BadgeProps) {
-  const badgeClass = `badge badge-${color}`;
+export default function Badge({ title }: BadgeProps) {
+  const badgeClass = `badge badge-accent`;
   return <div className={badgeClass}>✦ {title}</div>;
 }
