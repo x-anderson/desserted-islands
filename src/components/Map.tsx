@@ -6,7 +6,7 @@ import {
   Popup,
   useMap,
 } from "react-leaflet";
-import { Country } from "../data/types";
+import { Country, CountryPost } from "../data/types";
 import L from "leaflet";
 import "./Map.css";
 import Badge from "./Badge";
@@ -16,8 +16,13 @@ import TextField from "@mui/material/TextField";
 import cakeMarker from "../img/cake_marker.png";
 import spinnerMarker from "../img/spinner_marker.png";
 import { useCountries } from "../data/CountriesProvider";
+import Button from "./Button";
+import React from "react";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 require("leaflet-spin");
+
+const IG_URL = "https://www.instagram.com/desserted_islands/";
 
 export default function MapContainer() {
   const location = useLocation();
@@ -145,14 +150,15 @@ function Map() {
     if (selectedCountryAlpha2) {
       const selectedCountry = countriesByAlpha2[selectedCountryAlpha2];
       if (selectedCountry) {
-        map.flyTo([selectedCountry.lat, selectedCountry.lng]);
-        const selectedCountryRef = popupRefs.current?.[selectedCountry.alpha2];
-        if (selectedCountryRef) {
-          selectedCountryRef.setLatLng([
-            selectedCountry.lat,
-            selectedCountry.lng,
-          ]);
-          map.openPopup(selectedCountryRef);
+        const center = map.getCenter();
+        const offset =
+          Math.round((center.lng - selectedCountry.lng) / 360) * 360;
+        const adjustedLng = selectedCountry.lng + offset;
+        const popupRef =
+          popupRefs.current[`${selectedCountry.alpha2}-${offset}`];
+        if (popupRef) {
+          popupRef.setLatLng([selectedCountry.lat, adjustedLng]);
+          map.openPopup(popupRef);
         }
         setSelectedCountry(selectedCountry);
       }
@@ -173,67 +179,37 @@ function Map() {
     if (!posts || !countries) {
       return;
     }
-    // When the user pans to another copy of the map, they do not see the markers on that copy
-    // as the markers are on only 1 layer. One option is to use the worldCopyJump option in leaflet
-    // but it doesn't work well when panning zoomed out. Instead, we can create some copies of the
-    // markers along the longitude to ensure they appear on more copies to give the impression to
-    // the user that they can scroll back and forth.
-    const countriesUpdatedLng: Country[] = [...countries];
-    countries.forEach((country) => {
-      for (let i = 360; i <= 1080; i += 360) {
-        countriesUpdatedLng.push({
-          ...country,
-          lng: country.lng + i,
-        });
-        countriesUpdatedLng.push({
-          ...country,
-          lng: country.lng - i,
-        });
-      }
-    });
+    // Make some copies of the countries both to the east and west lng - this gives the impression
+    // to the user that the map is infinite. When user gets to the edge of the map, worldCopyJump option
+    // in leaflet will reset the user to the centre map, and these extra copies will ensure it still
+    // appears infinite.
+    const copies = [-360, 0, 360];
     return countries.map((country, idx) => {
       const postsForCountry = posts[country.alpha2];
-      const hasPost = postsForCountry?.length && postsForCountry.length > 0;
-      return (
-        <Marker
-          key={`${country.alpha2}-${idx}`}
-          position={{ lat: country.lat, lng: country.lng }}
-          icon={createIcon(hasPost ? "cake" : "spinner")}
-          zIndexOffset={hasPost ? 1000 : undefined}
-          eventHandlers={{
-            click: () => handleSetAlpha2Params(country.alpha2),
-          }}
-        >
-          <Popup
-            ref={(r) => {
-              if (popupRefs.current) {
-                popupRefs.current[country.alpha2] = r;
-              }
+      const hasPost = !!postsForCountry?.length && postsForCountry.length > 0;
+      return copies.map((offset) => {
+        return (
+          <Marker
+            key={`${country.alpha2}-${idx}=${offset}`}
+            position={{ lat: country.lat, lng: country.lng + offset }}
+            riseOnHover
+            icon={createIcon(hasPost ? "cake" : "spinner")}
+            zIndexOffset={hasPost ? 1000 : undefined}
+            eventHandlers={{
+              click: () => handleSetAlpha2Params(country.alpha2),
             }}
-            closeButton={false}
-            eventHandlers={{ remove: () => handleClearAlpha2Params() }}
           >
-            <h5>{country.name}</h5>
-            {postsForCountry?.map((post, idx) => {
-              return (
-                <div key={`${idx}-${post.url}`} className="map-popover-content">
-                  {post.subCountry && <h6>{post.subCountry}</h6>}
-                  <a
-                    href={post.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Link to the Instagram post (Opens in new tab)"
-                  >
-                    View dessert on Instagram!
-                    <br></br>
-                  </a>
-                </div>
-              );
-            })}
-            {!hasPost && <p>Coming soon....</p>}
-          </Popup>
-        </Marker>
-      );
+            <CountryPopup
+              country={country}
+              offset={offset}
+              postsForCountry={postsForCountry}
+              hasPost={hasPost}
+              popupRefs={popupRefs}
+              handleClearAlpha2Params={handleClearAlpha2Params}
+            />
+          </Marker>
+        );
+      });
     });
   }, [posts, countries, handleSetAlpha2Params, handleClearAlpha2Params]);
 
@@ -243,29 +219,141 @@ function Map() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         url={`https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png?key=${process.env.REACT_APP_CARTO_API_KEY}`}
       />
-      {countries && (
-        <div
-          style={{ pointerEvents: "all", top: "10px", right: "10px" }}
-          className="country-autocomplete leaflet-top leaflet-right"
-        >
-          <Autocomplete
-            options={countries}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} placeholder="Find an island country..." />
-            )}
-            getOptionLabel={(option) => {
-              return option.name;
-            }}
-            onChange={(e, value) => {
-              handleSelectCountryFromAutocomplete(value);
-            }}
-            value={selectedCountry || null}
-          />
-        </div>
-      )}
+      <div
+        style={{ pointerEvents: "all", top: "10px", right: "10px" }}
+        className="country-autocomplete leaflet-top leaflet-right"
+      >
+        <Autocomplete
+          options={countries ?? []}
+          size="small"
+          sx={{ width: 300 }}
+          loading={loading}
+          loadingText="Loading..."
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              size="small"
+              placeholder="Find an island country..."
+            />
+          )}
+          getOptionLabel={(option) => {
+            return option.name;
+          }}
+          onChange={(e, value) => {
+            handleSelectCountryFromAutocomplete(value);
+          }}
+          value={selectedCountry || null}
+        />
+      </div>
 
       {countryMarkers}
     </>
   );
 }
+
+type CountryPopupProps = {
+  country: Country;
+  offset: number;
+  postsForCountry?: CountryPost[];
+  hasPost: boolean;
+  popupRefs: React.MutableRefObject<Record<string, any>>;
+  handleClearAlpha2Params: () => void;
+};
+
+const CountryPopup = ({
+  country,
+  offset,
+  postsForCountry,
+  hasPost,
+  popupRefs,
+  handleClearAlpha2Params,
+}: CountryPopupProps) => {
+  return (
+    <Popup
+      ref={(r) => {
+        popupRefs.current[`${country.alpha2}-${offset}`] = r;
+      }}
+      closeButton={false}
+      eventHandlers={{
+        remove: handleClearAlpha2Params,
+      }}
+      autoPan
+      autoPanPaddingTopLeft={[20, 75]}
+      autoPanPaddingBottomRight={[20, 75]}
+    >
+      <div className="popup-content">
+        <div className="popup-content-header">
+          <img
+            className="map-legend-item-img"
+            src={hasPost ? cakeMarker : spinnerMarker}
+            alt={hasPost ? "Baked marker" : "Coming soon marker"}
+          />
+          <div>
+            <h6 className="popup-content-header-label">
+              {hasPost ? "Baked and Documented" : "On the itenerary"}
+            </h6>
+            <h3>{country.name}</h3>
+          </div>
+        </div>
+
+        <p>
+          {hasPost && postsForCountry?.length === 1
+            ? "Meet the dessert and see how it turned out!"
+            : hasPost && postsForCountry && postsForCountry.length > 1
+            ? `${postsForCountry.length} bakes from constituent countries - choose one to explore!`
+            : "This islands adventure is still to come"}
+        </p>
+
+        {!hasPost && (
+          <div className="map-popover-content">
+            <Button
+              href={IG_URL}
+              aria-label="Link to the Instagram page (Opens in new tab)"
+              variant="secondary"
+              icon={faInstagram}
+              size="md"
+              fullWidth
+            >
+              Follow the journey!
+            </Button>
+          </div>
+        )}
+
+        {postsForCountry && postsForCountry?.length === 1 && (
+          <div className="map-popover-content">
+            <Button
+              href={postsForCountry[0].url}
+              aria-label="Link to the Instagram post (Opens in new tab)"
+              variant="primary"
+              icon={faInstagram}
+              size="md"
+              fullWidth
+            >
+              View on Instagram!
+            </Button>
+          </div>
+        )}
+
+        {postsForCountry && postsForCountry.length > 1 && (
+          <div className="map-popover-content">
+            <div className="map-popover-content-subcountries">
+              {postsForCountry.map((post, idx) => (
+                <Button
+                  key={`${idx}-${post.url}`}
+                  href={post.url}
+                  aria-label="Link to the Instagram post (Opens in new tab)"
+                  variant="primary"
+                  icon={faInstagram}
+                  size="sm"
+                  fullWidth
+                >
+                  {post.subCountry}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Popup>
+  );
+};

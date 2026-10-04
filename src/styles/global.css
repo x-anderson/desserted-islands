@@ -89,6 +89,8 @@ a {
   color: inherit;
   text-decoration: none;
   transition: color 0.2s ease, opacity 0.2s ease;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 a:hover {
