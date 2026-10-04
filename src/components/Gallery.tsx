@@ -2,9 +2,10 @@ import "./Gallery.css";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Button from "./Button";
 import Badge from "./Badge";
+import { useCountryCounts } from "../data/utils";
+import Skeleton from "./Skeleton";
 
 const IG_URL = "https://www.instagram.com/desserted_islands/";
-const DONE_COUNT = 93;
 
 interface GalleryItem {
   url: string;
@@ -60,6 +61,7 @@ const GALLERY_MAIN: GalleryItem[] = [
 ];
 
 export default function Gallery() {
+  const { loading, countriesCompleted } = useCountryCounts();
   return (
     <section className="gallery-section" id="gallery">
       <div className="gallery-container">
@@ -105,7 +107,8 @@ export default function Gallery() {
           }}
           icon={faInstagram}
         >
-          See all {DONE_COUNT} bakes on Instagram
+          See all {loading ? <Skeleton width="1rem" /> : countriesCompleted}{" "}
+          bakes on Instagram
         </Button>
       </div>
     </section>
