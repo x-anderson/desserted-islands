@@ -19,6 +19,7 @@ import { useCountries } from "../data/CountriesProvider";
 import Button from "./Button";
 import React from "react";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { getCountryEmoji } from "../data/utils";
 
 require("leaflet-spin");
 
@@ -283,11 +284,9 @@ const CountryPopup = ({
     >
       <div className="popup-content">
         <div className="popup-content-header">
-          <img
-            className="map-legend-item-img"
-            src={hasPost ? cakeMarker : spinnerMarker}
-            alt={hasPost ? "Baked marker" : "Coming soon marker"}
-          />
+          <span className="popup-content-flag">
+            {getCountryEmoji(country.alpha2)}
+          </span>
           <div>
             <h6 className="popup-content-header-label">
               {hasPost ? "Baked and Documented" : "On the itenerary"}
